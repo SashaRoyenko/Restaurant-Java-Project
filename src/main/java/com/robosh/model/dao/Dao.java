@@ -5,12 +5,12 @@ import java.util.List;
 
 public interface Dao<T> extends AutoCloseable{
     //Create
-    void create(T entity) throws SQLException;
+    void create(T entity);
 
     //Read
-    T findById(long id) throws SQLException;
+    T findById(long id);
 
-    List<T> findAll() throws SQLException;
+    List<T> findAll();
 
     //Update
     void update(T t) throws SQLException;

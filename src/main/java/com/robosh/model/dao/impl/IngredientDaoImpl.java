@@ -4,6 +4,8 @@ import com.robosh.model.dao.IngredientDao;
 import com.robosh.model.dao.impl.SqlQueries.IngredientSqlQueries;
 import com.robosh.model.dao.mapper.IngredientMapper;
 import com.robosh.model.entity.Ingredient;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,42 +13,59 @@ import java.util.List;
 
 public class IngredientDaoImpl implements IngredientDao {
     private Connection connection;
+    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+
 
     public IngredientDaoImpl(Connection connection) {
         this.connection = connection;
     }
     @Override
-    public void create(Ingredient entity) throws SQLException {
+    public void create(Ingredient entity) {
         final String query = IngredientSqlQueries.CREATE_INGREDIENT.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, entity.getIngredientName());
-        preparedStatement.execute();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, entity.getIngredientName());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public Ingredient findById(long id) throws SQLException {
+    public Ingredient findById(long id){
         IngredientMapper ingredientMapper = new IngredientMapper();
         Ingredient ingredient = new Ingredient();
         final String query = IngredientSqlQueries.FIND_INGREDIENT_BY_ID.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, id);
-        preparedStatement.executeQuery();
-        final ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            ingredient = ingredientMapper.extractObjectFromResultSet(resultSet);
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                ingredient = ingredientMapper.extractObjectFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
+            e.printStackTrace();
         }
+
         return ingredient;
     }
 
     @Override
-    public List<Ingredient> findAll() throws SQLException {
+    public List<Ingredient> findAll() {
         IngredientMapper ingredientMapper = new IngredientMapper();
         List<Ingredient> ingredientList = new ArrayList<>();
-        Statement statement = connection.createStatement();
-        final String query = IngredientSqlQueries.FIND_ALL_INGREDIENTS.getQuery();
-        final ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()) {
-            ingredientList.add(ingredientMapper.extractObjectFromResultSet(resultSet));
+        final ResultSet resultSet;
+        try (Statement statement = connection.createStatement()) {
+            final String query = IngredientSqlQueries.FIND_ALL_INGREDIENTS.getQuery();
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                ingredientList.add(ingredientMapper.extractObjectFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
+            e.printStackTrace();
         }
         return ingredientList;
     }
@@ -74,27 +93,36 @@ public class IngredientDaoImpl implements IngredientDao {
     }
 
     @Override
-    public List<Ingredient> selectDishIngredients(long dish_id) throws SQLException {
+    public List<Ingredient> selectDishIngredients(long dish_id) {
         IngredientMapper ingredientMapper = new IngredientMapper();
         List<Ingredient> ingredientList = new ArrayList<>();
-        Statement statement = connection.createStatement();
         final String query = IngredientSqlQueries.FIND_ALL_DISH_INGREDIENTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, dish_id);
-        final ResultSet resultSet = preparedStatement.executeQuery();
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+            Statement statement = connection.createStatement()){
+            preparedStatement.setLong(1, dish_id);
+            resultSet = preparedStatement.executeQuery();
 
-        while (resultSet.next()) {
-            ingredientList.add(ingredientMapper.extractObjectFromResultSet(resultSet));
+            while (resultSet.next()) {
+                ingredientList.add(ingredientMapper.extractObjectFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
+            e.printStackTrace();
         }
         return ingredientList;
     }
 
     @Override
-    public void addDishIngredient(long dish_id, long ingredient_id) throws SQLException {
+    public void addDishIngredient(long dish_id, long ingredient_id) {
         final String query = IngredientSqlQueries.ADD_DISH_INGREDIENT.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, dish_id);
-        preparedStatement.setLong(2, ingredient_id);
-        preparedStatement.execute();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, dish_id);
+            preparedStatement.setLong(2, ingredient_id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
+            e.printStackTrace();
+        }
     }
 }

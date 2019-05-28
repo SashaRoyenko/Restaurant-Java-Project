@@ -7,6 +7,8 @@ import com.robosh.model.entity.Dish;
 import com.robosh.model.entity.Drink;
 import com.robosh.model.entity.OrderProducts;
 import com.robosh.model.entity.User;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,42 +16,57 @@ import java.util.List;
 
 public class OrderProductsDaoImpl implements OrderProductsDao {
     private Connection connection;
+    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
     public OrderProductsDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public void create(OrderProducts entity) throws SQLException {
+    public void create(OrderProducts entity) {
         final String query = OrderProductsQueries.CREATE_ORDER_PRODUCTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, entity.getUser().getId());
-        preparedStatement.execute();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, entity.getUser().getId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public OrderProducts findById(long id) throws SQLException {
+    public OrderProducts findById(long id) {
         OrderProducts orderProducts = new OrderProducts();
         OrderProductsMapper orderProductsMapper = new OrderProductsMapper();
         String query = OrderProductsQueries.FIND_ORDER_PRODUCTS_BY_ID.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, id);
-        final ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            orderProducts = orderProductsMapper.extractObjectFromResultSet(resultSet);
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                orderProducts = orderProductsMapper.extractObjectFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
         }
         return orderProducts;
     }
 
     @Override
-    public List<OrderProducts> findAll() throws SQLException {
+    public List<OrderProducts> findAll() {
         OrderProductsMapper orderProductsMapper = new OrderProductsMapper();
         List<OrderProducts> orderProducts = new ArrayList<>();
-        Statement statement = connection.createStatement();
-        final String query = OrderProductsQueries.FIND_ALL_ORDER_PRODUCTS.getQuery();
-        final ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()) {
-            orderProducts.add(orderProductsMapper.extractObjectFromResultSet(resultSet));
+        final ResultSet resultSet;
+        try (Statement statement = connection.createStatement()) {
+            final String query = OrderProductsQueries.FIND_ALL_ORDER_PRODUCTS.getQuery();
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                orderProducts.add(orderProductsMapper.extractObjectFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
         }
         return orderProducts;
     }
@@ -77,62 +94,87 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
     }
 
     @Override
-    public void addDish(Dish dish, OrderProducts orderProducts) throws SQLException {
+    public void addDish(Dish dish, OrderProducts orderProducts) {
         final String query = OrderProductsQueries.ADD_DISH_TO_ORDER_PRODUCTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, dish.getId());
-        preparedStatement.setLong(1, orderProducts.getId());
-        preparedStatement.execute();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, dish.getId());
+            preparedStatement.setLong(1, orderProducts.getId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void addDrink(Drink drink, OrderProducts orderProducts) throws SQLException {
+    public void addDrink(Drink drink, OrderProducts orderProducts) {
         final String query = OrderProductsQueries.ADD_DRINK_TO_ORDER_PRODUCTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, drink.getId());
-        preparedStatement.setLong(1, orderProducts.getId());
-        preparedStatement.execute();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, drink.getId());
+            preparedStatement.setLong(1, orderProducts.getId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void deleteDish(Dish dish, OrderProducts orderProducts) throws SQLException {
+    public void deleteDish(Dish dish, OrderProducts orderProducts) {
         final String query = OrderProductsQueries.DELETE_DISH_FROM_ORDER_PRODUCTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, dish.getId());
-        preparedStatement.setLong(2, orderProducts.getId());
-        preparedStatement.executeQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, dish.getId());
+            preparedStatement.setLong(2, orderProducts.getId());
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void deleteDrink(Drink drink, OrderProducts orderProducts) throws SQLException {
+    public void deleteDrink(Drink drink, OrderProducts orderProducts)  {
         final String query = OrderProductsQueries. DELETE_DRINK_FROM_ORDER_PRODUCTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, drink.getId());
-        preparedStatement.setLong(2, orderProducts.getId());
-        preparedStatement.executeQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, drink.getId());
+            preparedStatement.setLong(2, orderProducts.getId());
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public List<Drink> selectDrinks(User user) throws SQLException {
-        List<Drink> drinkList;
+    public List<Drink> selectDrinks(User user) {
+        List<Drink> drinkList = null;
         OrderProductsMapper orderProductsMapper = new OrderProductsMapper();
         final String query = OrderProductsQueries.SELECT_DRINKS_FROM_ORDER_PRODUCTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, user.getId());
-        final ResultSet resultSet = preparedStatement.executeQuery();
-        drinkList = orderProductsMapper.extractOrderProductsDrinks(resultSet);
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, user.getId());
+            resultSet = preparedStatement.executeQuery();
+            drinkList = orderProductsMapper.extractOrderProductsDrinks(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return drinkList;
     }
 
     @Override
-    public List<Dish> selectDishes(User user) throws SQLException {
-        List<Dish> dishList;
+    public List<Dish> selectDishes(User user)  {
+        List<Dish> dishList = null;
         OrderProductsMapper orderProductsMapper = new OrderProductsMapper();
         final String query = OrderProductsQueries.SELECT_DISHES_FROM_ORDER_PRODUCTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, user.getId());
-        final ResultSet resultSet = preparedStatement.executeQuery();
-        dishList = orderProductsMapper.extractOrderProductsDishes(resultSet);
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, user.getId());
+            resultSet = preparedStatement.executeQuery();
+            dishList = orderProductsMapper.extractOrderProductsDishes(resultSet);
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
         return dishList;
     }
 }

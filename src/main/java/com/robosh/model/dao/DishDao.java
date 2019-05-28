@@ -8,6 +8,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface DishDao extends Dao<Dish> {
-    void addIngredient(long dish_id, long ingredient_id) throws SQLException;
-    List<Ingredient> selectDishIngredients(Dish dish) throws SQLException;
+    void addIngredient(long dish_id, long ingredient_id);
+    List<Ingredient> selectDishIngredients(Dish dish);
 }
