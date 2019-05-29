@@ -10,6 +10,6 @@ import java.io.IOException;
 public class Error404Command implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        return "jsp/error/404.jsp";
+        return "jsp/error/403.jsp";
     }
 }

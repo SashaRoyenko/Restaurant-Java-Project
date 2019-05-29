@@ -51,32 +51,33 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Tasty</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="../html/index.html">Tasty</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
         </button>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="menu.html" class="nav-link">Menu</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item active"><a href="${pageContext.request.contextPath}/tasty-restaurant/home" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/tasty-restaurant/menu" class="nav-link">Menu</a></li>
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/tasty-restaurant/about" class="nav-link">About</a></li>
                 <li class="nav-item" id ="user"><a class="nav-link">
                     <svg class="nav-svg ">
-                        <use x="0" y="0" xlink:href="images/user.svg#user"></use>
+                        <use x="0" y="0" xlink:href="${pageContext.request.contextPath}/images/user.svg#user"></use>
                     </svg>
                 </a></li>
                 <li class="nav-item"><a href="#" class="nav-link">
                     <svg class="nav-svg">
-                        <use x="0" y="0" xlink:href="images/shopping-cart.svg#cart"></use>
+                        <use x="0" y="0" xlink:href="${pageContext.request.contextPath}/images/shopping-cart.svg#cart"></use>
                     </svg>
                 </a></li>
                 <li class="nav-item">
                     <div class="nav-link dropdown">
                         <div class="dropbtn">UA</div>
                         <div class="dropdown-content">
-                            <a href="#">UA</a>
-                            <a href="#">EN</a>
+                            <a href="?locale=ua">UA</a>
+                            <a href="?locale=en">EN</a>
                         </div>
                     </div>
             </ul>
@@ -114,7 +115,7 @@
 
 <div id="login_wrapper">
     <div class="login">
-        <form action="" method="get">
+        <form action="" method="post">
             <p><span class="fontawesome-user"></span>
                 <input type="email" placeholder="Email" name = "login" required></p>
             <p><span class="fontawesome-lock"></span>

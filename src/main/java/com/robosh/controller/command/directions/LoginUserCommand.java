@@ -10,6 +10,6 @@ import java.io.IOException;
 public class LoginUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        return "/jsp/loginUser.jsp";
+        return "/jsp/login.jsp";
     }
 }

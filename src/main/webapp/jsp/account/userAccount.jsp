@@ -11,6 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-
+    <h1>User account</h1>
+    <form action="${pageContext.request.contextPath}/tasty-restaurant/logOut">
+        <button type="submit" class="logout">Logout</button>
+    </form>
 </body>
 </html>

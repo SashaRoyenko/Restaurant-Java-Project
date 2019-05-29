@@ -54,11 +54,13 @@
                 <li class="nav-item active"><a href="${pageContext.request.contextPath}/tasty-restaurant/home" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="${pageContext.request.contextPath}/tasty-restaurant/menu" class="nav-link">Menu</a></li>
                 <li class="nav-item"><a href="${pageContext.request.contextPath}/tasty-restaurant/about" class="nav-link">About</a></li>
-                <li class="nav-item" id ="user"><a class="nav-link">
+                <li class="nav-item" id ="user">
+                    <a href="${pageContext.request.contextPath}/tasty-restaurant/login" class="nav-link">
                     <svg class="nav-svg ">
                         <use x="0" y="0" xlink:href="${pageContext.request.contextPath}/images/user.svg#user"></use>
                     </svg>
-                </a></li>
+                </a>
+                </li>
                 <li class="nav-item"><a href="#" class="nav-link">
                     <svg class="nav-svg">
                         <use x="0" y="0" xlink:href="${pageContext.request.contextPath}/images/shopping-cart.svg#cart"></use>
@@ -312,18 +314,18 @@
     </svg>
 </div>
 
-<div id="login_wrapper">
-    <div class="login">
-        <form action="" method="post">
-            <p><span class="fontawesome-user"></span>
-                <input type="email" placeholder="Email" name = "login" required></p>
-            <p><span class="fontawesome-lock"></span>
-                <input type="password" placeholder="Password" name = "login_password" required></p>
-            <p><input type="submit" value="ВОЙТИ"></p>
-        </form>
-        <p>Нет аккаунта? &nbsp;&nbsp;<a href="${pageContext.request.contextPath}/tasty-restaurant/registration">Регистрация</a><span class="fontawesome-arrow-right"></span></p>
-    </div>
-</div>
+<%--<div id="login_wrapper">--%>
+<%--    <div class="login">--%>
+<%--        <form action="" method="post">--%>
+<%--            <p><span class="fontawesome-user"></span>--%>
+<%--                <input type="email" placeholder="Email" name = "login" required></p>--%>
+<%--            <p><span class="fontawesome-lock"></span>--%>
+<%--                <input type="password" placeholder="Password" name = "login_password" required></p>--%>
+<%--            <p><input type="submit" value="ВОЙТИ"></p>--%>
+<%--        </form>--%>
+<%--        <p>Нет аккаунта? &nbsp;&nbsp;<a href="${pageContext.request.contextPath}/tasty-restaurant/registration">Регистрация</a><span class="fontawesome-arrow-right"></span></p>--%>
+<%--    </div>--%>
+<%--</div>--%>
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-migrate-3.0.1.min.js"></script>
