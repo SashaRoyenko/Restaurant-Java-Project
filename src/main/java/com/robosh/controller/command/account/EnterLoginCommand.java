@@ -18,29 +18,26 @@ public class EnterLoginCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)  {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         final String email = request.getParameter("login");
         final String password = request.getParameter("login_password");
 
-        if (!userService.isUserExist(email,password)){
+        if (!userService.isUserExist(email, password)) {
             String errorMessage = "Invalid Email or Password";
             request.setAttribute("errorMessage", errorMessage);
-            //return "/jsp/loginClient.jsp";
-            return "/jsp/login.jsp";
-        }else {
-            if (AppUtils.getLoggedUser(request.getSession()) != null){
-                return "redirect#" + request.getContextPath() + "/tasty-restaurant/userAccount";
-            }
-            User user = userService.getUserByEmailAndPassword(email, password);
-            if (user.getRole() == Role.ADMIN){
-                AppUtils.storeLoggedUser(request.getSession(), user);
-                return "redirect#" + request.getContextPath() + "/tasty-restaurant/adminAccount";
-            }
-            else {
-                AppUtils.storeLoggedUser(request.getSession(), user);
-                return "redirect#" + request.getContextPath() + "/tasty-restaurant/userAccount";
-            }
+            return "/jsp/home.jsp";
         }
-    }
+        User user;
+        if (AppUtils.getLoggedUser(request.getSession()) != null) {
+            user = AppUtils.getLoggedUser(request.getSession());
+            return "redirect#" + request.getContextPath() + "/tasty-restaurant/" +
+                    user.getRole().toString().toLowerCase() + "Account";
+        } else {
+            user = userService.getUserByEmailAndPassword(email, password);
+            AppUtils.storeLoggedUser(request.getSession(), user);
+            return "redirect#" + request.getContextPath() + "/tasty-restaurant/" +
+                    user.getRole().toString().toLowerCase() + "Account";
+        }
 
+    }
 }

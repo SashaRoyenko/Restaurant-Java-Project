@@ -3,7 +3,7 @@ package com.robosh.controller;
 import com.robosh.controller.command.Command;
 import com.robosh.controller.command.account.EnterLoginCommand;
 import com.robosh.controller.command.account.LogOutCommand;
-import com.robosh.controller.command.account.ShowOrdersCommand;
+import com.robosh.controller.command.account.RegistrationCommand;
 import com.robosh.controller.command.directions.*;
 import com.robosh.service.OrderService;
 import com.robosh.service.UserService;
@@ -23,15 +23,16 @@ public class Servlet extends HttpServlet {
     public void init() {
         commands = new HashMap<>();
         commands.put("login", new EnterLoginCommand(new UserService()));
+        commands.put("loginUser", new LoginUserCommand());
         commands.put("registration", new RegisterUserCommand());
+        commands.put("registerUser", new RegistrationCommand(new UserService()));
         commands.put("home", new HomeCommand());
         commands.put("menu", new MenuCommand());
         commands.put("about", new AboutCommand());
-        commands.put("enterLogin", new EnterLoginCommand(new UserService()));
         commands.put("logOut", new LogOutCommand());
         commands.put("userAccount", new UserAccountCommand());
-        commands.put("adminAccount", new AdminAccountCommand());
-        commands.put("404", new Error404Command());
+        commands.put("adminAccount", new AdminAccountCommand(new OrderService()));
+        commands.put("403", new Error403Command());
     }
 
     @Override

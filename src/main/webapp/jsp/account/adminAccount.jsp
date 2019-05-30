@@ -20,7 +20,7 @@
         <button type="submit" class="logout">Logout</button>
     </form>
     <c:forEach items="${requestScope.orderList}" var="order">
-                <p><c:out value="${order.idOrder}"/></p>
+                <p><c:out value="${order.id}"/></p>
                 <p><c:out value="${order.date}"/>
                 <p><c:out value="${order.bill}"/>
                 <p><c:out value="${order.address}"/></p>

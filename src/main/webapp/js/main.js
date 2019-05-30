@@ -27,17 +27,16 @@ AOS.init({
     };
     loader();
 
-    // $('#user').click(function () {
-    //     $('#login_wrapper').fadeIn();
-    //    // $('#login_wrapper').css('display', 'flex');
-    // });
-    // //закрыть по клику вне окна
-    // $(document).mouseup(function (e) {
-    //     var popup = $('.login');
-    //     if ($('#login_wrapper').css('display') == 'block' && e.target != popup[0] && popup.has(e.target).length === 0) {
-    //         $('#login_wrapper').fadeOut();
-    //     }
-    // });
+    $('#user').click(function () {
+        $('#login_wrapper').fadeIn();
+    });
+    //закрыть по клику вне окна
+    $(document).mouseup(function (e) {
+        var popup = $('.login');
+        if ($('#login_wrapper').css('display') == 'block' && e.target != popup[0] && popup.has(e.target).length === 0) {
+            $('#login_wrapper').fadeOut();
+        }
+    });
 
     var carousel = function () {
         $('.home-slider').owlCarousel({

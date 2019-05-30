@@ -29,24 +29,23 @@ public class RegistrationCommand implements Command {
         final String password = request.getParameter("password");
         final String confirmedPassword = request.getParameter("confirmedPassword");
 
-        if (password.equals(confirmedPassword)){
+        if (password.equals(confirmedPassword)) {
 
+            User user = User.newBuilder()
+                    .setFirstName(firstName)
+                    .setLastName(lastName)
+                    .setEmail(email)
+                    .setPassword(password)
+                    .setPhone(phone)
+                    .build();
+            System.out.println(user);
+            try {
+                userService.createUser(user);
+            } catch (EmailIsAlreadyTaken | PhoneIsAlreadyTaken emailIsAlreadyTaken) {
+                emailIsAlreadyTaken.printStackTrace();
+                return "/jsp/registration.jsp";
+            }
         }
-
-        User user = User.newBuilder()
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .setEmail(email)
-                .setPassword(password)
-                .setPhone(phone)
-                .build();
-
-        try {
-            userService.createUser(user);
-        } catch (EmailIsAlreadyTaken | PhoneIsAlreadyTaken emailIsAlreadyTaken) {
-            emailIsAlreadyTaken.printStackTrace();
-            return "/jsp/registration.jsp";
-        }
-        return "/jsp/menu.jsp";
+        return "redirect#" + request.getContextPath() + "/tasty-restaurant/loginUser";
     }
 }

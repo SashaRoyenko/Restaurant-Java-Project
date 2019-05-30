@@ -24,8 +24,9 @@ public class AuthentificationFilter implements Filter {
         String pathInfo = request.getPathInfo();
         User loggedUser = AppUtils.getLoggedUser(request.getSession());
 
-        if ("/loggedUser".equals(pathInfo) && loggedUser != null){
-            response.sendRedirect(request.getContextPath() + "/tasty-restaurant/userAccount");
+        if ("/login5".equals(pathInfo) && loggedUser != null){
+            response.sendRedirect(request.getContextPath() + "/tasty-restaurant/" +
+                    loggedUser.getRole().toString().toLowerCase() + "Account");
             return;
         }
 
