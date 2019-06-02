@@ -1,10 +1,17 @@
 package com.robosh.controller;
 
 import com.robosh.controller.command.Command;
-import com.robosh.controller.command.account.EnterLoginCommand;
-import com.robosh.controller.command.account.LogOutCommand;
-import com.robosh.controller.command.account.RegistrationCommand;
-import com.robosh.controller.command.directions.*;
+import com.robosh.controller.command.login.LoginPageCommand;
+import com.robosh.controller.command.login.LoginUserCommand;
+import com.robosh.controller.command.logout.LogoutCommand;
+import com.robosh.controller.command.pages.AboutCommand;
+import com.robosh.controller.command.pages.HomeCommand;
+import com.robosh.controller.command.pages.MenuCommand;
+import com.robosh.controller.command.registration.RegisterUserCommand;
+import com.robosh.controller.command.registration.RegistrationPageCommand;
+import com.robosh.controller.command.users.AdminPageCommand;
+import com.robosh.controller.command.users.UserPageCommand;
+import com.robosh.controller.utils.PagesRequest;
 import com.robosh.service.OrderService;
 import com.robosh.service.UserService;
 
@@ -20,59 +27,38 @@ public class Servlet extends HttpServlet {
     private Map<String, Command> commands;
 
     @Override
-    public void init() {
+    public void init() throws ServletException {
         commands = new HashMap<>();
-        commands.put("login", new EnterLoginCommand(new UserService()));
-        commands.put("loginUser", new LoginUserCommand());
-        commands.put("registration", new RegisterUserCommand());
-        commands.put("registerUser", new RegistrationCommand(new UserService()));
-        commands.put("home", new HomeCommand());
-        commands.put("menu", new MenuCommand());
-        commands.put("about", new AboutCommand());
-        commands.put("logOut", new LogOutCommand());
-        commands.put("userAccount", new UserAccountCommand());
-        commands.put("adminAccount", new AdminAccountCommand(new OrderService()));
-        commands.put("403", new Error403Command());
+        commands.put("/", new HomeCommand());
+        commands.put(PagesRequest.HOME_PAGE, new HomeCommand());
+        commands.put(PagesRequest.MENU_PAGE, new MenuCommand());
+        commands.put(PagesRequest.ABOUT_PAGE, new AboutCommand());
+        commands.put(PagesRequest.LOGIN_PAGE, new LoginPageCommand());
+        commands.put(PagesRequest.LOGIN, new LoginUserCommand(new UserService()));
+        commands.put(PagesRequest.LOGOUT, new LogoutCommand());
+        commands.put(PagesRequest.REGISTRATION_PAGE, new RegistrationPageCommand());
+        commands.put(PagesRequest.REGISTRATION, new RegisterUserCommand(new UserService()));
+        commands.put(PagesRequest.ADMIN_PAGE, new AdminPageCommand(new OrderService()));
+        commands.put(PagesRequest.USER_PAGE, new UserPageCommand());
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        executeRequest(request, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        executeRequest(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String commandKey = getRequestPath(request);//get next command key
-        Command command = commands.get(commandKey);
-        if (command == null) { //if there is no command with such key, request dispatcher home page
-            request.getRequestDispatcher("/tasty-restaurant/home").forward(request, response);
-        }else {
-            String nextPage = command.execute(request, response);
-            if (isRedirect(nextPage)){
-                System.out.println("redirect servlet: " + nextPage + "\n");
-                response.sendRedirect(nextPage.replaceAll("redirect#", ""));
-            }
-            else{
-                System.out.println("forward servlet: " + nextPage +"\n");
-                request.getRequestDispatcher(nextPage).forward(request, response);
-            }
+    private void executeRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String uri = request.getRequestURI().replace(PagesRequest.PATH, "");
+        String uri = request.getPathInfo();
+        Command currentCommand = commands.get(uri);
+        if (currentCommand == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        } else {
+            currentCommand.execute(request, response);
         }
-    }
-
-
-    private String getRequestPath(HttpServletRequest request) {
-        String pathURI = request.getRequestURI();
-        return pathURI.replaceAll(".*/tasty-restaurant/", "");
-    }
-
-    private boolean isRedirect(String string){
-        return string.contains("redirect#");
     }
 }

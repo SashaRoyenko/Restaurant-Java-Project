@@ -9,10 +9,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="${bundle}"/>
 
-<jsp:include page="parts/header.jsp"/>
-
-
+<html lang="${locale}">
+<head>
+    <jsp:include page="parts/link.jsp"/>
+    <title><fmt:message key="label.home.title"/></title>
+</head>
+<body>
+<jsp:include page="parts/nav.jsp"/>
 <section class="home-slider owl-carousel">
     <div class="slider-item" style="background-image: url('${pageContext.request.contextPath}/images/bg_1.jpg');">
         <div class="overlay"></div>

@@ -1,6 +1,7 @@
-package com.robosh.controller.command.account;
+package com.robosh.controller.command.registration;
 
 import com.robosh.controller.command.Command;
+import com.robosh.controller.command.login.LoginUserCommand;
 import com.robosh.model.entity.User;
 import com.robosh.model.exceptions.EmailIsAlreadyTaken;
 import com.robosh.model.exceptions.PhoneIsAlreadyTaken;
@@ -11,17 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RegistrationCommand implements Command {
-
+public class RegisterUserCommand implements Command {
     private UserService userService;
 
-    public RegistrationCommand(UserService userService) {
+    public RegisterUserCommand(UserService userService) {
         this.userService = userService;
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         final String firstName = request.getParameter("firstName");
         final String lastName = request.getParameter("lastName");
         final String phone = request.getParameter("phone");
@@ -43,9 +42,9 @@ public class RegistrationCommand implements Command {
                 userService.createUser(user);
             } catch (EmailIsAlreadyTaken | PhoneIsAlreadyTaken emailIsAlreadyTaken) {
                 emailIsAlreadyTaken.printStackTrace();
-                return "/jsp/registration.jsp";
+                new RegistrationPageCommand().execute(request, response);
             }
         }
-        return "redirect#" + request.getContextPath() + "/tasty-restaurant/loginUser";
+        new LoginUserCommand(userService).execute(request, response);
     }
 }

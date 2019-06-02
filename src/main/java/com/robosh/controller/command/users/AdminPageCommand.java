@@ -1,6 +1,7 @@
-package com.robosh.controller.command.directions;
+package com.robosh.controller.command.users;
 
 import com.robosh.controller.command.Command;
+import com.robosh.controller.utils.PagesPath;
 import com.robosh.model.entity.Order;
 import com.robosh.service.OrderService;
 
@@ -10,17 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class AdminAccountCommand implements Command {
+public class AdminPageCommand implements Command {
+
     private OrderService orderService;
 
-    public AdminAccountCommand(OrderService orderService) {
+    public AdminPageCommand(OrderService orderService) {
         this.orderService = orderService;
     }
+
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Order> orderList = orderService.getAllOrders();
-        System.out.println(orderList);
         request.setAttribute("orderList", orderList);
-        return "/jsp/account/adminAccount.jsp";
+        request.getRequestDispatcher(PagesPath.ADMIN_PAGE).forward(request, response);
     }
 }
