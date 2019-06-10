@@ -63,7 +63,8 @@
                                             </div>
                                             <div class="one-forth pr-1 d-flex flex-column align-items-center">
                                                 <span class="price"><c:out value="${dish.price}"/> UAN</span>
-                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=deleteDish&id=<c:out value="${dish.id}"/>" method="post">
+                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=deleteDish&id=<c:out value="${dish.id}"/>"
+                                                      method="post">
                                                     <input class="menu_btn btn" type="submit" value="Delete">
                                                 </form>
                                             </div>
@@ -89,7 +90,8 @@
                                             </div>
                                             <div class="one-forth pr-1 d-flex flex-column align-items-center">
                                                 <span class="price"><c:out value="${drink.price}"/> UAN</span>
-                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=deleteDrink&id=<c:out value="${drink.id}"/>" method="post">
+                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=deleteDrink&id=<c:out value="${drink.id}"/>"
+                                                      method="post">
                                                     <input class="menu_btn btn" type="submit" value="Delete">
                                                 </form>
                                             </div>
@@ -110,13 +112,20 @@
             Total price: <c:out value="${sessionScope.totalPrice}"/> UAN
         </h5>
     </div>
-        <input class="btn btn-primary pl-5 pr-5" type="submit" value="Buy">
-    <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=buy" method = "post"
-    class="d-flex flex-column align-items-center justify-content-center">
-        <input type="text" placeholder="Your Address" required>
-        <input type="submit" class="mt-4 btn btn-primary pl-5 pr-5">
-    </form>
+    <input id="address_btn" class="btn btn-primary pl-5 pr-5" type="submit" value="BUY">
+
 </section>
+<div id="address_wrapper">
+    <div class="address_form">
+        <form action="${pageContext.request.contextPath}/tasty-restaurant/order?action=buy" method="post"
+              class="d-flex flex-column align-items-center justify-content-center ">
+
+            <input type="text" placeholder="Your Address" required class="form-control" name="address">
+            <input type="submit" class="mt-4 btn btn-primary pl-5 pr-5" value="Send">
+
+        </form>
+    </div>
+</div>
 <jsp:include page="parts/footer.jsp"/>
 </body>
 </html>

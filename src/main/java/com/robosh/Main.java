@@ -11,9 +11,8 @@ public class Main {
         DrinkService drinkService = new DrinkService();
         Drink drink = drinkService.getDrinkById(2);
         OrderProductsService orderProductsService = new OrderProductsService();
-        OrderProducts orderProducts = orderProductsService.getOrderProductsById(1);
-        orderProductsService.deleteDrink(drink, orderProducts);
         User user = new User();
         System.out.println(user.getRole());
+        orderProductsService.deleteOrderProductsForUserId(2);
     }
 }

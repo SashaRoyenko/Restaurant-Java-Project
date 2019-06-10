@@ -26,7 +26,7 @@ public class PaidPagination implements Command {
         } else {
             currentPage = 1;
         }
-        List<Order> paidOrders = orderService.getPaidOrders(currentPage, recordsPerPage);
+        List<Order> paidOrders = orderService.getPaidOrders(currentPage-1, recordsPerPage);
 
         request.setAttribute("paidOrders", paidOrders);
 

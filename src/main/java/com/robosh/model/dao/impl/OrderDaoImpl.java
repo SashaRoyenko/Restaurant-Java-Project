@@ -24,7 +24,7 @@ public class OrderDaoImpl implements OrderDao {
     public void create(Order entity) {
         final String query = OrderSqlQueries.CREATE_ORDER.getQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(2, entity.getAddress());
+            preparedStatement.setString(1, entity.getAddress());
             preparedStatement.setLong(2, entity.getUser().getId());
             preparedStatement.execute();
         } catch (SQLException e) {

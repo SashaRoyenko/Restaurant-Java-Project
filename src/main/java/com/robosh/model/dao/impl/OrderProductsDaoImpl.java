@@ -56,7 +56,7 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             preparedStatement.setLong(1, user.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-               orderProducts.setId(resultSet.getLong("order_products_id"));
+                orderProducts.setId(resultSet.getLong("order_products_id"));
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
@@ -108,11 +108,15 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
     }
 
     @Override
-    public void delete(long id) throws SQLException {
+    public void delete(long id) {
         final String query = OrderProductsQueries.DELETE_ORDER_PRODUCTS.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, id);
-        preparedStatement.executeQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -244,6 +248,5 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
         }
         return dishList;
     }
-
 
 }

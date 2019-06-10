@@ -7,10 +7,12 @@ import com.robosh.model.entity.Drink;
 import com.robosh.model.entity.OrderProducts;
 import com.robosh.model.entity.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class OrderProductsService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
+
 
     public void createOrderProductsWithUSer(User user) {
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()) {
@@ -86,6 +88,14 @@ public class OrderProductsService {
     public float getTotalPrice(User user){
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
             return dao.getTotalDishPrice(user) + dao.getTotalDrinkPrice(user);
+        }
+    }
+
+    public void deleteOrderProductsForUserId(long id) {
+        try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
+            dao.delete(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

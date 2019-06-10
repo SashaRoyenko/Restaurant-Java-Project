@@ -38,6 +38,18 @@ AOS.init({
         }
     });
 
+    $('#address_btn').click(function () {
+        $('#address_wrapper').fadeIn();
+        $('#address_wrapper').css('display', 'flex');
+    });
+    //закрыть по клику вне окна
+    $(document).mouseup(function (e) {
+        var popup = $('.address_form');
+        if ($('#address_wrapper').css('display') == 'flex' && e.target != popup[0] && popup.has(e.target).length === 0) {
+            $('#address_wrapper').fadeOut();
+        }
+    });
+
     var carousel = function () {
         $('.home-slider').owlCarousel({
             loop: true,

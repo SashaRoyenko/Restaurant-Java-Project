@@ -40,7 +40,10 @@ public class BasketCommand implements Command {
             OrderProducts orderProducts = orderProductsService.getOrderProductsByUser(user);
             Drink drink = new Drink();
             Dish dish = new Dish();
-            long id = Long.parseLong(request.getParameter("id"));
+            long id = 0;
+            if(request.getParameter("id") != null) {
+                id = Long.parseLong(request.getParameter("id"));
+            }
             switch (action) {
                 case ADD_DISH:
                     dish = dishService.getDishById(id);
@@ -62,6 +65,8 @@ public class BasketCommand implements Command {
                     orderProductsService.deleteDrink(drink, orderProducts);
                     sendRedirect(action, request, response);
                     break;
+                default:
+                    sendRedirect(action, request, response);
             }
         }
         else{

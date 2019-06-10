@@ -48,7 +48,7 @@ public class Servlet extends HttpServlet {
         commands.put(PagesRequest.ADMIN_PAGE, new AdminPageCommand(new OrderService()));
         commands.put(PagesRequest.USER_PAGE, new UserPageCommand(orderService));
         commands.put(PagesRequest.BASKET, new BasketCommand(dishService, drinkService, orderProductsService));
-        commands.put(PagesRequest.ORDER, new OrderCommand(orderService));
+        commands.put(PagesRequest.ORDER, new OrderCommand(orderService, orderProductsService));
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
