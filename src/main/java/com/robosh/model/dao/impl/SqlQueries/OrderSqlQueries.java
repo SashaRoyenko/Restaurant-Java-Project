@@ -12,7 +12,12 @@ public enum OrderSqlQueries {
     SELECT_UNCONFIRMED_ORDERS("SELECT * FROM `order`, user WHERE  user_user_id = user_id AND checked = false"),
     SELECT_PAID_ORDERS("SELECT * FROM `order`, user WHERE  user_user_id = user_id AND paid = true"),
     SELECT_USER_UNPAID_ORDERS("select * from `order`, user where user_user_id = user_id" +
-            " AND checked = true AND paid = false AND user_id = ?");
+            " AND checked = true AND paid = false AND user_id = ?"),
+    SELECT_PAID_ORDERS_LIMIT("SELECT * FROM `order`, user WHERE  user_user_id = user_id AND paid = true LIMIT ?, ?"),
+    SELECT_UNCONFIRMED_ORDERS_LIMIT("SELECT * FROM `order`, user WHERE  user_user_id = user_id AND checked = false LIMIT ?, ?"),
+    SELECT_PAID_ORDERS_COUNT("SELECT COUNT(*) as count FROM `order`, user WHERE  user_user_id = user_id AND paid = true"),
+    SELECT_UNCONFIRMED_ORDERS_COUNT("SELECT COUNT(*) as count FROM `order`, user WHERE  user_user_id = user_id AND checked = false");
+
     private String query;
 
     OrderSqlQueries(String query) {

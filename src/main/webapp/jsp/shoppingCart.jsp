@@ -110,8 +110,11 @@
             Total price: <c:out value="${sessionScope.totalPrice}"/> UAN
         </h5>
     </div>
-    <form action="" method = "post">
         <input class="btn btn-primary pl-5 pr-5" type="submit" value="Buy">
+    <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=buy" method = "post"
+    class="d-flex flex-column align-items-center justify-content-center">
+        <input type="text" placeholder="Your Address" required>
+        <input type="submit" class="mt-4 btn btn-primary pl-5 pr-5">
     </form>
 </section>
 <jsp:include page="parts/footer.jsp"/>

@@ -54,6 +54,7 @@ public class AuthenticationFilter implements Filter {
                 response.sendRedirect(PagesRequest.PATH + PagesRequest.USER_PAGE);
                 break;
             default:
+                System.out.println("default");
                response.sendRedirect(PagesRequest.PATH + PagesRequest.HOME_PAGE);
         }
     }

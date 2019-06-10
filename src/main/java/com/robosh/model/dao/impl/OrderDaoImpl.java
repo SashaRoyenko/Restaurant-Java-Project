@@ -89,6 +89,46 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> getPaidOrders(long from, long to) {
+        OrderMapper orderMapper = new OrderMapper(connection);
+        List<Order> orders = new ArrayList<>();
+        String query = OrderSqlQueries.SELECT_PAID_ORDERS_LIMIT.getQuery();
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, from);
+            preparedStatement.setLong(2, to);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(orderMapper.extractObjectFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderDaoImpl ", e);
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> getUncheckedOrders(long from, long to) {
+        OrderMapper orderMapper = new OrderMapper(connection);
+        List<Order> orders = new ArrayList<>();
+        String query = OrderSqlQueries.SELECT_UNCONFIRMED_ORDERS_LIMIT.getQuery();
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, from);
+            preparedStatement.setLong(2, to);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(orderMapper.extractObjectFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderDaoImpl ", e);
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
     public List<Order> getUserUnpaidOrders(long user_id) {
         OrderMapper orderMapper = new OrderMapper(connection);
         List<Order> orders = new ArrayList<>();
@@ -189,5 +229,39 @@ public class OrderDaoImpl implements OrderDao {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public long paidOrderCount() {
+        long count = 0;
+        String query = OrderSqlQueries.SELECT_PAID_ORDERS_COUNT.getQuery();
+        final ResultSet resultSet;
+        try (Statement statement = connection.createStatement()) {
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderDaoImpl ", e);
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long uncheckedOrderCount() {
+        long count = 0;
+        String query = OrderSqlQueries.SELECT_UNCONFIRMED_ORDERS_LIMIT.getQuery();
+        final ResultSet resultSet;
+        try (Statement statement = connection.createStatement()) {
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderDaoImpl ", e);
+            e.printStackTrace();
+        }
+        return count;
     }
 }

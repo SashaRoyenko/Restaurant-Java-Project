@@ -103,12 +103,46 @@
                             <p><c:out value="${uncheck.address}"/></p>
                             <p><c:out value="${uncheck.user.firstName}"/></p>
                             <p><c:out value="${uncheck.user.phone}"/></p>
-                            <form action="${pageContext.request.contextPath}/tasty-restaurant/order?action=confirmOrder&id=<c:out value="${uncheck.id}"/>" method="post">
+                            <form action="${pageContext.request.contextPath}/tasty-restaurant/order?action=confirmOrder&id=<c:out value="${uncheck.id}"/>"
+                                  method="post">
                                 <input class="btn menu_btn" type="submit">
                             </form>
                         </li>
                     </c:forEach>
                 </ul>
+                <nav aria-label="Navigation for UnCheck orders">
+                    <ul class="pagination">
+                        <c:if test="${requestScope.currentUnCheckPage != 1}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${pageContext.request.contextPath}/tasty-restaurant/adminAccount?currentUnCheckPage=${requestScope.currentUnCheckPage-1}">Previous</a>
+                            </li>
+                        </c:if>
+
+                        <c:forEach begin="1" end="${requestScope.numberOFUnCheckPages}" var="i">
+                            <c:choose>
+                                <c:when test="${requestScope.currentUnCheckPage eq i}">
+                                    <li class="page-item active">
+                                        <a class="page-link">${i} <span class="sr-only">(current)</span></a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="${pageContext.request.contextPath}/tasty-restaurant/adminAccount?currentUnCheckPage=${i}">${i}</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+
+                        <c:if test="${requestScope.currentUnCheckPage lt requestScope.numberOfUnCheckPages}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${pageContext.request.contextPath}/tasty-restaurant/adminAccount?currentUnCheckPage=${requestScope.currentUnCheckPage+1}">Next</a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
             </div>
             <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                 <ul class="d-flex flex-column">
@@ -121,6 +155,41 @@
                             <p><c:out value="${paid.user.phone}"/></p>
                         </li>
                     </c:forEach>
+                </ul>
+                <nav aria-label="Navigation for Paid orders">
+                    <input type="hidden" name="currentPage" value="1">
+                    <ul class="pagination">
+                        <c:if test="${requestScope.currentPaidPage != 1}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${pageContext.request.contextPath}/tasty-restaurant/adminAccount?currentPage=${requestScope.currentPaidPage-1}">Previous</a>
+                            </li>
+                        </c:if>
+
+                        <c:forEach begin="1" end="${requestScope.numberOFPaidPages}" var="i">
+                            <c:choose>
+                                <c:when test="${requestScope.currentPaidPage eq i}">
+                                    <li class="page-item active">
+                                        <a class="page-link">${i} <span class="sr-only">(current)</span></a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="${pageContext.request.contextPath}/tasty-restaurant/adminAccount?currentPaidPage=${i}">${i}</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+
+                        <c:if test="${requestScope.currentPaidPage lt requestScope.numberOfPaidPages}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${pageContext.request.contextPath}/tasty-restaurant/adminAccount?currentPaidPage=${requestScope.currentPaidPage +1 }">Next</a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
                 </ul>
             </div>
         </div>

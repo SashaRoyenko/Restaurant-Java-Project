@@ -32,17 +32,18 @@ public class OrderCommand implements Command {
         final String PAY_ORDER_ACTION = "payOrder";
         long id = Long.parseLong(request.getParameter("id"));
 
-        switch (action){
+        switch (action) {
             case CONFIRM_ACTION:
                 orderService.confirmOrder(id);
                 adminPage.execute(request, response);
                 break;
             case CREATE_ORDER_ACTION:
                 Order order = Order.newBuilder()
-                              .setAddress("")
-                                .setUser(SessionUtil.getUserFromSession(request.getSession()))
-                                .build();
+                        .setAddress("")
+                        .setUser(SessionUtil.getUserFromSession(request.getSession()))
+                        .build();
                 orderService.createOrder(order);
+
                 shoppingCart.execute(request, response);
                 break;
             case PAY_ORDER_ACTION:

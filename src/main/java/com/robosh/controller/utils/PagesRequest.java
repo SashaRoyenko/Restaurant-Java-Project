@@ -16,4 +16,5 @@ public class PagesRequest {
     public static final String MENU_PAGE = "/menu";
     public static final String BASKET = "/basket";
     public static final String ORDER = "/order";
+    public static final String PAID_ORDERS_PAGINATION = "paidOrders";
 }

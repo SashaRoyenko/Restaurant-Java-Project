@@ -9,6 +9,11 @@ public interface OrderDao extends Dao<Order> {
     List<Order> getUserUnpaidOrders(long user_id);
     List<Order> getPaidOrders();
     List<Order> getUncheckedOrders();
+    List<Order> getPaidOrders(long from, long to);
+    List<Order> getUncheckedOrders(long from, long to);
     void changePaymentStatus(long id);
     void confirmOrder(long id);
+    long paidOrderCount();
+    long uncheckedOrderCount();
+
 }

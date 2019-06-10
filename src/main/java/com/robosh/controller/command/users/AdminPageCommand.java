@@ -1,6 +1,8 @@
 package com.robosh.controller.command.users;
 
 import com.robosh.controller.command.Command;
+import com.robosh.controller.command.pagination.PaidPagination;
+import com.robosh.controller.command.pagination.UncheckPagination;
 import com.robosh.controller.utils.PagesPath;
 import com.robosh.model.entity.Order;
 import com.robosh.service.OrderService;
@@ -21,10 +23,8 @@ public class AdminPageCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<Order> paidOrders = orderService.getPaidOrders();
-        List<Order> uncheckedOrders = orderService.geUncheckedOrders();
-        request.setAttribute("paidOrders", paidOrders);
-        request.setAttribute("uncheckedOrders", uncheckedOrders);
+        new PaidPagination(orderService).execute(request, response);
+        new UncheckPagination(orderService).execute(request, response);
         request.getRequestDispatcher(PagesPath.ADMIN_PAGE).forward(request, response);
     }
 }

@@ -27,7 +27,7 @@ public class OrderService {
         }
     }
 
-    public List<Order> getUserUnpaidOrders(long user_id){
+    public List<Order> getUserUnpaidOrders(long user_id) {
         try (OrderDao dao = daoFactory.createOrderDao()) {
             return dao.getUserUnpaidOrders(user_id);
         }
@@ -60,6 +60,30 @@ public class OrderService {
     public void confirmOrder(long id) {
         try (OrderDao dao = daoFactory.createOrderDao()) {
             dao.confirmOrder(id);
+        }
+    }
+
+    public List<Order> getPaidOrders(long from, long to) {
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            return dao.getPaidOrders(from, to);
+        }
+    }
+
+    public List<Order> getUncheckedOrders(long from, long to) {
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            return dao.getUncheckedOrders(from, to);
+        }
+    }
+
+    public long getPaidOrderCount() {
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            return dao.paidOrderCount();
+        }
+    }
+
+    public long getUncheckedOrderCount() {
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            return dao.uncheckedOrderCount();
         }
     }
 }

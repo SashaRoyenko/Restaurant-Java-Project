@@ -15,9 +15,7 @@ import com.robosh.controller.command.registration.RegistrationPageCommand;
 import com.robosh.controller.command.users.AdminPageCommand;
 import com.robosh.controller.command.users.UserPageCommand;
 import com.robosh.controller.utils.PagesRequest;
-import com.robosh.model.dao.DishDao;
 import com.robosh.service.*;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
