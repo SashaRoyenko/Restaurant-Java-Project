@@ -8,6 +8,7 @@ public class PagesPath {
     public static final String HOME_PAGE = PAGE_PATH + "/home.jsp";
     public static final String LOGIN_PAGE = PAGE_PATH + "/loginUser.jsp";
     public static final String REGISTRATION_PAGE = PAGE_PATH + "/registration.jsp";
+    public static final String SHOPPING_CART_PAGE = PAGE_PATH + "/shoppingCart.jsp";
     public static final String ADMIN_PAGE = USER_PATH + "/adminAccount.jsp";
     public static final String USER_PAGE = USER_PATH + "/userAccount.jsp";
     public static final String ABOUT_PAGE = PAGE_PATH + "/about.jsp";

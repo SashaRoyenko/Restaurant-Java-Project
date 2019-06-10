@@ -22,7 +22,7 @@ public class DishService {
         try (DishDao dao = daoFactory.createDishDao();
              IngredientDao ingredientDao = daoFactory.createIngredientDao()) {
             dish = dao.findById(id);
-            dish.setIngredientList(ingredientDao.selectDishIngredients(id));
+            dish.setIngredientList(dao.selectDishIngredients(dish));
         }
         return dish;
     }

@@ -402,6 +402,41 @@ AOS.init({
     });
     $('#book_time').timepicker();
 
+    $('#editname').click(function () {
+        if ($('#slidename').css('display') == 'none') {
+            $('#slidename').css('display', 'block');
+        } else {
+            $('#slidename').css('display', 'none');
+        }
+    });
+    $('#editsurname').click(function () {
+        if ($('#slidesurname').css('display') == 'none') {
+            $('#slidesurname').css('display', 'block');
+        } else {
+            $('#slidesurname').css('display', 'none');
+        }
+    });
+    $('#editemail').click(function () {
+        if ($('#slideemail').css('display') == 'none') {
+            $('#slideemail').css('display', 'block');
+        } else {
+            $('#slideemail').css('display', 'none');
+        }
+    });
+    $('#editphone').click(function () {
+        if ($('#slidephone').css('display') == 'none') {
+            $('#slidephone').css('display', 'block');
+        } else {
+            $('#slidephone').css('display', 'none');
+        }
+    });
+    $('#editpassword').click(function () {
+        if ($('#slidepassword').css('display') == 'none') {
+            $('#slidepassword').css('display', 'block');
+        } else {
+            $('#slidepassword').css('display', 'none');
+        }
+    });
 
 })(jQuery);
 

@@ -12,6 +12,13 @@ import java.util.List;
 public class OrderProductsService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
+    public void createOrderProductsWithUSer(User user) {
+        try (OrderProductsDao dao = daoFactory.createOrderProductsDao()) {
+            dao.createOrderProductsWithUser(user);
+        }
+
+    }
+
     public void createOrderProducts(OrderProducts orderProducts) {
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()) {
             dao.create(orderProducts);
@@ -26,6 +33,13 @@ public class OrderProductsService {
         }
         return OrderProducts;
     }
+    public OrderProducts getOrderProductsByUser(User user) {
+        OrderProducts OrderProducts;
+        try (OrderProductsDao dao = daoFactory.createOrderProductsDao()) {
+            OrderProducts = dao.findOrderProductsByUser(user);
+        }
+        return OrderProducts;
+    }
 
     public List<OrderProducts> getAllOrderProductses() {
         List<OrderProducts> orderProductsList;
@@ -35,38 +49,43 @@ public class OrderProductsService {
         return orderProductsList;
     }
 
-    void addDish(Dish dish, OrderProducts orderProducts){
+    public void addDish(Dish dish, OrderProducts orderProducts){
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
            dao.addDish(dish, orderProducts);
         }
     }
-    void addDrink(Drink drink, OrderProducts orderProducts){
+    public void addDrink(Drink drink, OrderProducts orderProducts){
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
             dao.addDrink(drink, orderProducts);
         }
     }
-    void deleteDish(Dish dish, OrderProducts orderProducts){
+    public void deleteDish(Dish dish, OrderProducts orderProducts){
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
             dao.deleteDish(dish, orderProducts);
         }
     }
-    void deleteDrink(Drink drink, OrderProducts orderProducts){
+    public void deleteDrink(Drink drink, OrderProducts orderProducts){
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
             dao.deleteDrink(drink, orderProducts);
         }
     }
-    List<Drink> selectDrinks(User user){
+    public List<Drink> selectDrinks(User user){
         List<Drink> drinks;
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
             drinks = dao.selectDrinks(user);
         }
         return drinks;
     }
-    List<Dish> selectDishes(User user){
+    public List<Dish> selectDishes(User user){
         List<Dish> dishes;
         try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
             dishes = dao.selectDishes(user);
         }
         return dishes;
+    }
+    public float getTotalPrice(User user){
+        try (OrderProductsDao dao = daoFactory.createOrderProductsDao()){
+            return dao.getTotalDishPrice(user) + dao.getTotalDrinkPrice(user);
+        }
     }
 }

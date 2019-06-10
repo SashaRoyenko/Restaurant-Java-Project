@@ -25,24 +25,22 @@
                 <li class="nav-item active"><a href="${pageContext.request.contextPath}/tasty-restaurant/home" class="nav-link"><fmt:message key="label.home.title"/></a></li>
                 <li class="nav-item"><a href="${pageContext.request.contextPath}/tasty-restaurant/menu" class="nav-link"><fmt:message key="label.menu.title"/></a></li>
                 <li class="nav-item"><a href="${pageContext.request.contextPath}/tasty-restaurant/about" class="nav-link"><fmt:message key="label.about.title"/></a></li>
-<%--                I know that it is a bad practice but For this moment I haven't founf right solution--%>
-                <%
-                    String tag;
-                if(request.getSession().getAttribute("sessionUser") != null){
-                    tag = "<li class=\"nav-item\">\n"+
-                        "<a href = \"" + request.getContextPath() + "/tasty-restaurant/loginUser\" class=\"nav-link\">";
-                    }else {
-                    tag ="<li class=\"nav-item\" id =\"user\">" +
-                        "<a class=\"nav-link\">";
-                    }
-                %>
-                <%= tag %>
+                <c:choose>
+                    <c:when test="${sessionScope.sessionUser eq null}">
+                    <li class="nav-item" id = "user">
+                    <a class="nav-link">
+                    </c:when>
+                    <c:otherwise>
+                    <li class="nav-item">
+                        <a href="${pageContext.request.contextPath}/tasty-restaurant/loginUser" class="nav-link">
+                    </c:otherwise>
+                </c:choose>
                         <svg class="nav-svg ">
                             <use x="0" y="0" xlink:href="${pageContext.request.contextPath}/images/user.svg#user"></use>
                         </svg>
                     </a>
                 </li>
-                <li class="nav-item"><a href="#" class="nav-link">
+                <li class="nav-item"><a href="${pageContext.request.contextPath}/tasty-restaurant/shoppingCart" class="nav-link">
                     <svg class="nav-svg">
                         <use x="0" y="0" xlink:href="${pageContext.request.contextPath}/images/shopping-cart.svg#cart"></use>
                     </svg>

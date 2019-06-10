@@ -18,12 +18,13 @@ public class SecurityConfig {
         List<String> userAccess = new ArrayList<>();
 
         userAccess.add(PagesRequest.USER_PAGE);
-
+        userAccess.add(PagesRequest.SHOPPING_CART_PAGE);
         mapConfig.put(Role.USER, userAccess);
 
         List<String> adminAccess = new ArrayList<>();
 
         adminAccess.add(PagesRequest.ADMIN_PAGE);
+        adminAccess.add(PagesRequest.SHOPPING_CART_PAGE);
 
         mapConfig.put(Role.ADMIN, adminAccess);
     }

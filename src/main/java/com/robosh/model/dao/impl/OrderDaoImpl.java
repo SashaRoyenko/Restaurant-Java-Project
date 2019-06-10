@@ -53,14 +53,69 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> findAll()  {
+    public List<Order> getPaidOrders() {
+        OrderMapper orderMapper = new OrderMapper(connection);
+        List<Order> orders = new ArrayList<>();
+        String query = OrderSqlQueries.SELECT_PAID_ORDERS.getQuery();
+        final ResultSet resultSet;
+        try (Statement statement = connection.createStatement()) {
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                orders.add(orderMapper.extractObjectFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderDaoImpl ", e);
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> getUncheckedOrders() {
+        OrderMapper orderMapper = new OrderMapper(connection);
+        List<Order> orders = new ArrayList<>();
+        String query = OrderSqlQueries.SELECT_UNCONFIRMED_ORDERS.getQuery();
+        final ResultSet resultSet;
+        try (Statement statement = connection.createStatement()) {
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                orders.add(orderMapper.extractObjectFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderDaoImpl ", e);
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> getUserUnpaidOrders(long user_id) {
+        OrderMapper orderMapper = new OrderMapper(connection);
+        List<Order> orders = new ArrayList<>();
+        String query = OrderSqlQueries.SELECT_USER_UNPAID_ORDERS.getQuery();
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, user_id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(orderMapper.extractObjectFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderDaoImpl ", e);
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> findAll() {
         OrderMapper orderMapper = new OrderMapper(connection);
         List<Order> orders = new ArrayList<>();
         String query = OrderSqlQueries.FIND_ALL_ORDERS.getQuery();
         final ResultSet resultSet;
         try (Statement statement = connection.createStatement()) {
             resultSet = statement.executeQuery(query);
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 orders.add(orderMapper.extractObjectFromResultSet(resultSet));
             }
         } catch (SQLException e) {
@@ -111,13 +166,25 @@ public class OrderDaoImpl implements OrderDao {
         return paid;
     }
 
+
     @Override
-    public void changePaymentStatus(Order order, boolean status) {
+    public void changePaymentStatus(long id) {
         final String query = OrderSqlQueries.UPDATE_PAID_STATUS.getQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setBoolean(1, status);
-            preparedStatement.setLong(2, order.getId());
-            preparedStatement.executeQuery();
+            preparedStatement.setLong(1, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderDaoImpl ", e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void confirmOrder(long id) {
+        final String query = OrderSqlQueries.UPDATE_CHECK_STATUS.getQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
             e.printStackTrace();

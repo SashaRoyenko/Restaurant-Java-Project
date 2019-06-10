@@ -3186,6 +3186,16 @@ input[type="button"].btn-block {
   margin-bottom: 0;
   list-style: none; }
 
+.my_nav-link{
+  background-color: #c5c5c5;
+  color:white;
+  margin-bottom: 15px;
+}
+
+.my_nav-link:hover{
+  color: #fff;
+  background-color: grey;
+}
 .nav-link {
   display: block;
   cursor:pointer;
@@ -7860,7 +7870,7 @@ h1, h2, h3, h4, h5,
       .dish-menu .menus .text .one-half p {
         margin-bottom: 0; }
     .dish-menu .menus .text .one-forth {
-      width: 80px;
+      /*width: 80px;*/
       text-align: right; }
       .dish-menu .menus .text .one-forth .price {
         font-size: 30px;
@@ -9180,4 +9190,52 @@ p {
   padding-left: 5px;
 }
 
+.menu_btn{
+  margin-top: 10px;
+  background-color: yellow;
+}
 
+.user_cabinet__list-item {
+  margin-bottom: 15px;
+}
+
+.user_cabinet__list-item form,.user_cabinet__list-item #slidepassword {
+  display: none;
+}
+
+.user_cabinet__list-item:last-child {
+  margin: 0;
+}
+
+.user_cabinet__title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.user_cabinet__edit {
+  cursor: pointer;
+  margin-right: 30px;
+}
+
+.account_title{
+  font-size: 22px;
+  color: grey;
+  font-family: Roboto;
+}
+
+.price {
+  font-size: 22px !important;
+  line-height: normal;
+}
+
+.order_item{
+  font-size: 18px;
+  border:1px solid grey;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.order_item input{
+  margin: 0;
+}

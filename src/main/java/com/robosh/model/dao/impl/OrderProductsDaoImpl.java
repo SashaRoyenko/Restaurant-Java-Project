@@ -23,6 +23,18 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
     }
 
     @Override
+    public void createOrderProductsWithUser(User user) {
+        final String query = OrderProductsQueries.CREATE_ORDER_PRODUCTS.getQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, user.getId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void create(OrderProducts entity) {
         final String query = OrderProductsQueries.CREATE_ORDER_PRODUCTS.getQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -32,6 +44,25 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public OrderProducts findOrderProductsByUser(User user) {
+        OrderProducts orderProducts = new OrderProducts();
+        String query = OrderProductsQueries.FIND_ORDER_PRODUCTS_BY_USER.getQuery();
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, user.getId());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+               orderProducts.setId(resultSet.getLong("order_products_id"));
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+            e.printStackTrace();
+        }
+        return orderProducts;
     }
 
     @Override
@@ -93,12 +124,13 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
         }
     }
 
+
     @Override
     public void addDish(Dish dish, OrderProducts orderProducts) {
         final String query = OrderProductsQueries.ADD_DISH_TO_ORDER_PRODUCTS.getQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, dish.getId());
-            preparedStatement.setLong(1, orderProducts.getId());
+            preparedStatement.setLong(2, orderProducts.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
@@ -111,7 +143,7 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
         final String query = OrderProductsQueries.ADD_DRINK_TO_ORDER_PRODUCTS.getQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, drink.getId());
-            preparedStatement.setLong(1, orderProducts.getId());
+            preparedStatement.setLong(2, orderProducts.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
@@ -125,7 +157,7 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, dish.getId());
             preparedStatement.setLong(2, orderProducts.getId());
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
             e.printStackTrace();
@@ -133,17 +165,52 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
     }
 
     @Override
-    public void deleteDrink(Drink drink, OrderProducts orderProducts)  {
-        final String query = OrderProductsQueries. DELETE_DRINK_FROM_ORDER_PRODUCTS.getQuery();
+    public void deleteDrink(Drink drink, OrderProducts orderProducts) {
+        final String query = OrderProductsQueries.DELETE_DRINK_FROM_ORDER_PRODUCTS.getQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, drink.getId());
             preparedStatement.setLong(2, orderProducts.getId());
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
             e.printStackTrace();
         }
     }
+
+    @Override
+    public float getTotalDishPrice(User user) {
+        float result = 0;
+        final String query = OrderProductsQueries.GET_TOTAL_DISH_PRICE.getQuery();
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, user.getId());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getFloat("price");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public float getTotalDrinkPrice(User user) {
+        float result = 0;
+        final String query = OrderProductsQueries.GET_TOTAL_DRINK_PRICE.getQuery();
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, user.getId());
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getFloat("price");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
     @Override
     public List<Drink> selectDrinks(User user) {
@@ -162,7 +229,7 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
     }
 
     @Override
-    public List<Dish> selectDishes(User user)  {
+    public List<Dish> selectDishes(User user) {
         List<Dish> dishList = null;
         OrderProductsMapper orderProductsMapper = new OrderProductsMapper();
         final String query = OrderProductsQueries.SELECT_DISHES_FROM_ORDER_PRODUCTS.getQuery();
@@ -177,4 +244,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
         }
         return dishList;
     }
+
+
 }

@@ -9,9 +9,27 @@ import java.util.List;
 public class OrderService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public List<Order> getAllOrders(){
+    public List<Order> getAllOrders() {
         try (OrderDao dao = daoFactory.createOrderDao()) {
             return dao.findAll();
+        }
+    }
+
+    public List<Order> getPaidOrders() {
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            return dao.getPaidOrders();
+        }
+    }
+
+    public List<Order> geUncheckedOrders() {
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            return dao.getUncheckedOrders();
+        }
+    }
+
+    public List<Order> getUserUnpaidOrders(long user_id){
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            return dao.getUserUnpaidOrders(user_id);
         }
     }
 
@@ -27,15 +45,21 @@ public class OrderService {
         }
     }
 
-    boolean isPaid(Order order) {
+    public boolean isPaid(Order order) {
         try (OrderDao dao = daoFactory.createOrderDao()) {
             return dao.isPaid(order);
         }
     }
 
-    void changePaymentStatus(Order order, boolean status) {
+    public void changePaymentStatus(long id) {
         try (OrderDao dao = daoFactory.createOrderDao()) {
-            dao.changePaymentStatus(order, status);
+            dao.changePaymentStatus(id);
+        }
+    }
+
+    public void confirmOrder(long id) {
+        try (OrderDao dao = daoFactory.createOrderDao()) {
+            dao.confirmOrder(id);
         }
     }
 }

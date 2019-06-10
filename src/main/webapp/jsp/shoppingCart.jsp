@@ -1,15 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Sasha
-  Date: 29.05.2019
-  Time: 8:58
-  To change this template use File | Settings | File Templates.
---%>
-<%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 29.05.2019
-  Time: 8:59
+  Date: 09.06.2019
+  Time: 15:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -34,13 +27,12 @@
             <div class="row slider-text align-items-center justify-content-center">
                 <div class="col-md-10 col-sm-12 ftco-animate text-center">
                     <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Menu</span></p>
-                    <h1 class="mb-3">Discover Our Exclusive Menu</h1>
+                    <h1 class="mb-3">Basket</h1>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <section class="ftco-section bg-light">
     <div class="container">
         <div class="row justify-content-center mb-5 pb-5">
@@ -51,23 +43,13 @@
         </div>
         <div class="row">
             <div class="col-md-12 dish-menu">
-
-                <div class="nav nav-pills justify-content-center ftco-animate" id="v-pills-tab" role="tablist"
-                     aria-orientation="vertical">
-                    <a class="nav-link py-3 px-4 active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
-                       role="tab" aria-controls="v-pills-home" aria-selected="true"><span class="flaticon-meat"></span>
-                        Main</a>
-                    <a class="nav-link py-3 px-4" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages"
-                       role="tab" aria-controls="v-pills-messages" aria-selected="false"><span
-                            class="flaticon-cheers"></span> Drinks</a>
-                </div>
                 <!-- END -->
                 <div class="tab-content py-5" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                          aria-labelledby="v-pills-home-tab">
                         <div class="row ">
-                            <c:forEach items="${requestScope.dishList}" var="dish">
-                            <div class="col-lg-6">
+                            <c:forEach items="${sessionScope.userDishes}" var="dish">
+                                <div class="col-lg-6">
                                     <div class="menus d-flex ftco-animate">
                                         <div class="menu-img"
                                              style="background-image: url(${pageContext.request.contextPath}/images/dish-3.jpg);"></div>
@@ -75,33 +57,25 @@
                                             <div class="one-half">
                                                 <h3><c:out value="${dish.name}"/></h3>
                                                 <p>
-                                                    <c:forEach items="${dish.ingredientList}" var="ingredient">
-                                                        <span class="mr-1"><c:out value="${ingredient.ingredientName}"/></span>
-                                                    </c:forEach>
-                                                </p>
-                                                <p>
                                                     <span class="menu-weight">Weight: </span>
                                                     <span><c:out value="${dish.weight}"/></span>
                                                 </p>
                                             </div>
                                             <div class="one-forth pr-1 d-flex flex-column align-items-center">
                                                 <span class="price"><c:out value="${dish.price}"/> UAN</span>
-                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=addDish&id=<c:out value="${dish.id}"/>" method="post">
-                                                    <input class="menu_btn btn" type="submit" value="Add to cart">
+                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=deleteDish&id=<c:out value="${dish.id}"/>" method="post">
+                                                    <input class="menu_btn btn" type="submit" value="Delete">
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
                             </c:forEach>
                         </div>
-                    </div>
 
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-                         aria-labelledby="v-pills-messages-tab">
                         <div class="row">
-                            <c:forEach items="${requestScope.drinkList}" var="drink">
-                            <div class="col-lg-6">
+                            <c:forEach items="${sessionScope.userDrinks}" var="drink">
+                                <div class="col-lg-6">
                                     <div class="menus d-flex ftco-animate">
                                         <div class="menu-img"
                                              style="background-image: url(${pageContext.request.contextPath}/images/drink-1.jpg);"></div>
@@ -113,15 +87,15 @@
                                                     <span><c:out value="${drink.volume}"/></span>
                                                 </p>
                                             </div>
-                                            <div class="one-forth d-flex flex-column align-items-center">
+                                            <div class="one-forth pr-1 d-flex flex-column align-items-center">
                                                 <span class="price"><c:out value="${drink.price}"/> UAN</span>
-                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=addDrink&id=<c:out value="${drink.id}"/>" method="post">
-                                                    <input class="menu_btn btn" type="submit" value="Add to cart">
+                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=deleteDrink&id=<c:out value="${drink.id}"/>" method="post">
+                                                    <input class="menu_btn btn" type="submit" value="Delete">
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
                             </c:forEach>
                         </div>
                     </div>
@@ -130,6 +104,16 @@
         </div>
     </div>
 </section>
-
-
+<section class="container d-flex justify-content-center align-items-center">
+    <div>
+        <h5 class="mr-5">
+            Total price: <c:out value="${sessionScope.totalPrice}"/> UAN
+        </h5>
+    </div>
+    <form action="" method = "post">
+        <input class="btn btn-primary pl-5 pr-5" type="submit" value="Buy">
+    </form>
+</section>
 <jsp:include page="parts/footer.jsp"/>
+</body>
+</html>

@@ -43,7 +43,7 @@
 
 <div class="login_wrapper">
     <div class="login">
-        <form action="${pageContext.request.contextPath}/tasty-restaurant/loginUser" method="get">
+        <form action="${pageContext.request.contextPath}/tasty-restaurant/loginUser" method="post">
             <p><span class="fontawesome-user"></span>
                 <input type="email" placeholder="Email" name = "login" required></p>
             <p><span class="fontawesome-lock"></span>

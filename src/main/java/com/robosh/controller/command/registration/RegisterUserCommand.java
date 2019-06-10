@@ -5,6 +5,7 @@ import com.robosh.controller.command.login.LoginUserCommand;
 import com.robosh.model.entity.User;
 import com.robosh.model.exceptions.EmailIsAlreadyTaken;
 import com.robosh.model.exceptions.PhoneIsAlreadyTaken;
+import com.robosh.service.OrderProductsService;
 import com.robosh.service.UserService;
 
 import javax.servlet.ServletException;
@@ -14,9 +15,11 @@ import java.io.IOException;
 
 public class RegisterUserCommand implements Command {
     private UserService userService;
+    private OrderProductsService orderProductsService;
 
-    public RegisterUserCommand(UserService userService) {
+    public RegisterUserCommand(UserService userService, OrderProductsService orderProductsService) {
         this.userService = userService;
+        this.orderProductsService = orderProductsService;
     }
 
     @Override
@@ -40,6 +43,7 @@ public class RegisterUserCommand implements Command {
             System.out.println(user);
             try {
                 userService.createUser(user);
+                orderProductsService.createOrderProductsWithUSer(user);
             } catch (EmailIsAlreadyTaken | PhoneIsAlreadyTaken emailIsAlreadyTaken) {
                 emailIsAlreadyTaken.printStackTrace();
                 new RegistrationPageCommand().execute(request, response);
@@ -47,4 +51,5 @@ public class RegisterUserCommand implements Command {
         }
         new LoginUserCommand(userService).execute(request, response);
     }
+
 }

@@ -21,8 +21,10 @@ public class AdminPageCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<Order> orderList = orderService.getAllOrders();
-        request.setAttribute("orderList", orderList);
+        List<Order> paidOrders = orderService.getPaidOrders();
+        List<Order> uncheckedOrders = orderService.geUncheckedOrders();
+        request.setAttribute("paidOrders", paidOrders);
+        request.setAttribute("uncheckedOrders", uncheckedOrders);
         request.getRequestDispatcher(PagesPath.ADMIN_PAGE).forward(request, response);
     }
 }
