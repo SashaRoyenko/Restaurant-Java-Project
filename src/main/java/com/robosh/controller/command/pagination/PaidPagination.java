@@ -26,13 +26,13 @@ public class PaidPagination implements Command {
         } else {
             currentPage = 1;
         }
-        List<Order> paidOrders = orderService.getPaidOrders(currentPage-1, recordsPerPage);
+        List<Order> paidOrders = orderService.getPaidOrders(((currentPage-1) * recordsPerPage), recordsPerPage*currentPage);
 
         request.setAttribute("paidOrders", paidOrders);
 
         long rows = orderService.getPaidOrderCount();
 
-        long nOfPages = rows / recordsPerPage;
+        long nOfPages = rows / recordsPerPage - 1;
 
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;

@@ -25,12 +25,12 @@ public class UncheckPagination implements Command {
         } else {
             currentPage = 1;
         }
-        List<Order> uncheckedOrders = orderService.getUncheckedOrders(currentPage-1, recordsPerPage);
+        List<Order> uncheckedOrders = orderService.getUncheckedOrders(((currentPage-1) * recordsPerPage), recordsPerPage*currentPage);
         request.setAttribute("uncheckedOrders", uncheckedOrders);
 
         long rows = orderService.getPaidOrderCount();
 
-        long nOfPages = rows / recordsPerPage;
+        long nOfPages = rows / recordsPerPage - 1;
 
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
