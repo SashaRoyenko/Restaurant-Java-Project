@@ -1,19 +1,20 @@
-#Tasty-restaurnt
+# Tasty-restaurnt
 
-##Task
+## Task
 
 21. System Restaurant. The client is created from the menu.
 Administrator p_dtverdzhuє Order і pov_domlyaє yogogo to the kitchen
 execution. The administrator bills. The customer produces it.
 payment.
 
-##Installing instructions
+## Installing instructions
 
-You need to download project by click ```Clone or download project```
+You need to download project by click ```Clone or download project```.
+
 You can download zip or clone project , just write in git bush console
 ```git clone https://github.com/SashaRoyenko/Restaurant-Java-Project.git```
 
-##Launching instruction 
+## Launching instruction 
 
 To run this app you should have installed Java and Maven on your local machine.
 1. Launch tasty-restaurant.sql at your sql server
