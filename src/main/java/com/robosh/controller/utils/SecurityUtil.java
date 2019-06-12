@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 public class SecurityUtil {
-    // Проверить требует ли данный 'request' входа в систему или нет.
     public static boolean isSecurityPage(HttpServletRequest request) {
 
         Set<Role> roles = SecurityConfig.getAllAppRoles();
@@ -21,7 +20,6 @@ public class SecurityUtil {
         return false;
     }
 
-    // Проверить имеет ли данный 'request' подходящую роль?
     public static boolean hasPermission(HttpServletRequest request, Role role) {
         return SecurityConfig.getUrlPatternsForRole(role).contains(request.getPathInfo());
     }

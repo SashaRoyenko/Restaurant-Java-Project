@@ -13,12 +13,13 @@ import java.util.List;
 
 public class IngredientDaoImpl implements IngredientDao {
     private Connection connection;
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+    private static final Logger logger = LogManager.getLogger(IngredientDaoImpl.class);
 
 
     public IngredientDaoImpl(Connection connection) {
         this.connection = connection;
     }
+
     @Override
     public void create(Ingredient entity) {
         final String query = IngredientSqlQueries.CREATE_INGREDIENT.getQuery();
@@ -27,12 +28,11 @@ public class IngredientDaoImpl implements IngredientDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
     @Override
-    public Ingredient findById(long id){
+    public Ingredient findById(long id) {
         IngredientMapper ingredientMapper = new IngredientMapper();
         Ingredient ingredient = new Ingredient();
         final String query = IngredientSqlQueries.FIND_INGREDIENT_BY_ID.getQuery();
@@ -46,7 +46,6 @@ public class IngredientDaoImpl implements IngredientDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
-            e.printStackTrace();
         }
 
         return ingredient;
@@ -65,7 +64,6 @@ public class IngredientDaoImpl implements IngredientDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
-            e.printStackTrace();
         }
         return ingredientList;
     }
@@ -99,7 +97,7 @@ public class IngredientDaoImpl implements IngredientDao {
         final String query = IngredientSqlQueries.FIND_ALL_DISH_INGREDIENTS.getQuery();
         final ResultSet resultSet;
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-            Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             preparedStatement.setLong(1, dish_id);
             resultSet = preparedStatement.executeQuery();
 
@@ -108,7 +106,6 @@ public class IngredientDaoImpl implements IngredientDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
-            e.printStackTrace();
         }
         return ingredientList;
     }
@@ -122,7 +119,6 @@ public class IngredientDaoImpl implements IngredientDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at IngredientDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 }

@@ -3,6 +3,10 @@ package com.robosh.model.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * This interface realise CRUD operations
+ * @param <T>
+ */
 public interface Dao<T> extends AutoCloseable{
     //Create
     void create(T entity);

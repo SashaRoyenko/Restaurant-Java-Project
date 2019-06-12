@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DrinkDaoImpl implements DrinkDao {
     private Connection connection;
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+    private static final Logger logger = LogManager.getLogger(DrinkDaoImpl.class);
 
     public DrinkDaoImpl(Connection connection) {
         this.connection = connection;
@@ -29,7 +29,6 @@ public class DrinkDaoImpl implements DrinkDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at DrinkDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -43,20 +42,18 @@ public class DrinkDaoImpl implements DrinkDao {
             preparedStatement.setLong(1, id);
             preparedStatement.executeQuery();
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 drink = drinkMapper.extractObjectFromResultSet(resultSet);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.fatal("SQLException occurred at DrinkDaoImpl ", e);
-            e.printStackTrace();
         }
 
         return drink;
     }
 
     @Override
-    public List<Drink> findAll()  {
+    public List<Drink> findAll() {
         DrinkMapper drinkMapper = new DrinkMapper();
         List<Drink> drinkList = new ArrayList<>();
         final ResultSet resultSet;
@@ -66,10 +63,8 @@ public class DrinkDaoImpl implements DrinkDao {
             while (resultSet.next()) {
                 drinkList.add(drinkMapper.extractObjectFromResultSet(resultSet));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.fatal("SQLException occurred at DrinkDaoImpl ", e);
-            e.printStackTrace();
         }
 
         return drinkList;

@@ -3,6 +3,8 @@ package com.robosh.controller.command.pagination;
 import com.robosh.controller.command.Command;
 import com.robosh.model.entity.Order;
 import com.robosh.service.OrderService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +14,12 @@ import java.util.List;
 
 public class UncheckPagination implements Command {
     private OrderService orderService;
+    private Logger logger = LogManager.getLogger(UncheckPagination.class);
 
     public UncheckPagination(OrderService orderService) {
         this.orderService = orderService;
     }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         final long recordsPerPage = 5L;
@@ -25,18 +29,22 @@ public class UncheckPagination implements Command {
         } else {
             currentPage = 1;
         }
-        List<Order> uncheckedOrders = orderService.getUncheckedOrders(((currentPage-1) * recordsPerPage), recordsPerPage*currentPage);
+        List<Order> uncheckedOrders = orderService.getUncheckedOrders(((currentPage - 1) * recordsPerPage), recordsPerPage * currentPage);
         request.setAttribute("uncheckedOrders", uncheckedOrders);
 
-        long rows = orderService.getPaidOrderCount();
+        long rows = orderService.getUncheckedOrderCount();
 
-        long nOfPages = rows / recordsPerPage - 1;
+        long nOfPages = rows / recordsPerPage;
 
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
         }
 
-        request.setAttribute("numberOFUnCheckPages", nOfPages);
+        logger.info("Uncheck pagination:");
+        logger.info("\tCurrent page: " + currentPage);
+        logger.info("\tNumber of pages: " + nOfPages);
+
+        request.setAttribute("numberOfUnCheckPages", nOfPages);
         request.setAttribute("currentUnCheckPage", currentPage);
     }
 }

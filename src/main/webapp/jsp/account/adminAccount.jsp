@@ -14,21 +14,20 @@
 
 <html lang="${locale}">
 <head>
-    <title>Title</title>
+    <title><fmt:message key="label.user.title"/> </title>
     <jsp:include page="../parts/link.jsp"/>
 </head>
 <body>
 <jsp:include page="../parts/nav.jsp"/>
 <section class="home-slider owl-carousel">
-    <div class="slider-item" style="background-image: url(${pageContext.request.contextPath}/images/bg_1.jpg);"
-         data-stellar-background-ratio="0.5">
+    <div class="slider-item" style="background-image: url(${pageContext.request.contextPath}/images/bg_1.jpg);" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row slider-text align-items-center justify-content-center">
                 <div class="col-md-10 col-sm-12 ftco-animate text-center">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span>
-                        <span>Admin account</span></p>
-                    <h1 class="mb-3"><fmt:message key="label.registration.title"/></h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="${pageContext.request.contextPath}/tasty-restaurant/home">
+                        <fmt:message key="label.home.title"/></a></span> <span><fmt:message key="label.user.title"/></span></p>
+                    <h1 class="mb-3"><fmt:message key="label.user.title"/></h1>
                 </div>
             </div>
         </div>
@@ -39,16 +38,16 @@
     <div class="user_account__wrap d-flex flex-row">
         <div class="nav flex-column nav-pills col-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link my_nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
-               role="tab" aria-controls="v-pills-home" aria-selected="true">Кабінет</a>
-            <a class="nav-link my_nav-link " id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
-               role="tab" aria-controls="v-pills-profile" aria-selected="false">Не підтвердженні замовлення</a>
+               role="tab" aria-controls="v-pills-home" aria-selected="true"><fmt:message key="label.user.cabinet"/></a>
+            <a class="nav-link my_nav-link " id="v-pills-prOfile-tab" data-toggle="pill" href="#v-pills-prOfile"
+               role="tab" aria-controls="v-pills-prOfile" aria-selected="false"><fmt:message key="label.user.uncheck"/></a>
             <a class="nav-link my_nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages"
-               role="tab" aria-controls="v-pills-messages" aria-selected="false">Оплачені замовлення</a>
+               role="tab" aria-controls="v-pills-messages" aria-selected="false"><fmt:message key="label.user.paid"/></a>
         </div>
 
         <div class="tab-content col-9" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div class="user_cabinet offset-1">
+                <div class="user_cabinet Offset-1">
                     <ul class="user_cabinet__list d-flex flex-column">
                         <li class="user_cabinet__list-item d-flex flex-row align-items-baseline">
                             <h6 class="user_cabinet__title">${sessionScope.sessionUser.firstName}</h6><i
@@ -90,11 +89,11 @@
                         </li>
                     </ul>
                     <form action="${pageContext.request.contextPath}/tasty-restaurant/logOut">
-                        <button type="submit" class="logout btn">Logout</button>
+                        <button type="submit" class="logout btn"> <fmt:message key="label.btn.logout"/></button>
                     </form>
                 </div>
             </div>
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <div class="tab-pane fade" id="v-pills-prOfile" role="tabpanel" aria-labelledby="v-pills-prOfile-tab">
                 <ul class="d-flex flex-column">
                     <c:forEach items="${requestScope.uncheckedOrders}" var="uncheck">
                         <li class="order_item d-flex flex-row justify-content-between align-items-center">
@@ -105,7 +104,7 @@
                             <p><c:out value="${uncheck.user.phone}"/></p>
                             <form action="${pageContext.request.contextPath}/tasty-restaurant/order?action=confirmOrder&id=<c:out value="${uncheck.id}"/>"
                                   method="post">
-                                <input class="btn menu_btn" type="submit">
+                                <input class="btn menu_btn" type="submit" value="<fmt:message key="label.btn.confirm"/>">
                             </form>
                         </li>
                     </c:forEach>
@@ -119,7 +118,7 @@
                             </li>
                         </c:if>
 
-                        <c:forEach begin="1" end="${requestScope.numberOFUnCheckPages}" var="i">
+                        <c:forEach begin="1" end="${requestScope.numberOfUnCheckPages}" var="i">
                             <c:choose>
                                 <c:when test="${requestScope.currentUnCheckPage eq i}">
                                     <li class="page-item active">
@@ -166,7 +165,7 @@
                             </li>
                         </c:if>
 
-                        <c:forEach begin="1" end="${requestScope.numberOFPaidPages}" var="i">
+                        <c:forEach begin="1" end="${requestScope.numberOfPaidPages}" var="i">
                             <c:choose>
                                 <c:when test="${requestScope.currentPaidPage eq i}">
                                     <li class="page-item active">

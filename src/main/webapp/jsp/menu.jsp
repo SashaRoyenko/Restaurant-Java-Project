@@ -33,8 +33,11 @@
         <div class="container">
             <div class="row slider-text align-items-center justify-content-center">
                 <div class="col-md-10 col-sm-12 ftco-animate text-center">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Menu</span></p>
-                    <h1 class="mb-3">Discover Our Exclusive Menu</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a
+                            href="${pageContext.request.contextPath}/tasty-restaurant/home"><fmt:message
+                            key="label.home.title"/></a>
+                    </span> <span><fmt:message key="label.menu.title"/></span></p>
+                    <h1 class="mb-3"><fmt:message key="label.menu.heading"/></h1>
                 </div>
             </div>
         </div>
@@ -45,8 +48,8 @@
     <div class="container">
         <div class="row justify-content-center mb-5 pb-5">
             <div class="col-md-7 text-center heading-section ftco-animate">
-                <span class="subheading">Our Menu</span>
-                <h2>Discover Our Exclusive Menu</h2>
+                <span class="subheading"><fmt:message key="label.menu.title"/></span>
+                <h2><fmt:message key="label.menu.heading"/></h2>
             </div>
         </div>
         <div class="row">
@@ -56,10 +59,10 @@
                      aria-orientation="vertical">
                     <a class="nav-link py-3 px-4 active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
                        role="tab" aria-controls="v-pills-home" aria-selected="true"><span class="flaticon-meat"></span>
-                        Main</a>
+                        <fmt:message key="label.menu.dish"/></a>
                     <a class="nav-link py-3 px-4" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages"
                        role="tab" aria-controls="v-pills-messages" aria-selected="false"><span
-                            class="flaticon-cheers"></span> Drinks</a>
+                            class="flaticon-cheers"></span><fmt:message key="label.menu.drink"/></a>
                 </div>
                 <!-- END -->
                 <div class="tab-content py-5" id="v-pills-tabContent">
@@ -67,16 +70,15 @@
                          aria-labelledby="v-pills-home-tab">
                         <div class="row ">
                             <c:forEach items="${requestScope.dishList}" var="dish">
-                            <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="menus d-flex ftco-animate">
-                                        <div class="menu-img"
-                                             style="background-image: url(${pageContext.request.contextPath}/images/dish-3.jpg);"></div>
-                                        <div class="text d-flex">
-                                            <div class="one-half">
+                                        <div class="text d-flex flex-row justify-content-between w-100">
+                                            <div class="">
                                                 <h3><c:out value="${dish.name}"/></h3>
                                                 <p>
                                                     <c:forEach items="${dish.ingredientList}" var="ingredient">
-                                                        <span class="mr-1"><c:out value="${ingredient.ingredientName}"/></span>
+                                                        <span class="mr-1"><c:out
+                                                                value="${ingredient.ingredientName}"/></span>
                                                     </c:forEach>
                                                 </p>
                                                 <p>
@@ -84,15 +86,20 @@
                                                     <span><c:out value="${dish.weight}"/></span>
                                                 </p>
                                             </div>
-                                            <div class="one-forth pr-1 d-flex flex-column align-items-center">
-                                                <span class="price"><c:out value="${dish.price}"/> UAN</span>
-                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=addDish&id=<c:out value="${dish.id}"/>" method="post">
-                                                    <input class="menu_btn btn" type="submit" value="Add to cart">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <span class="price"><c:out value="${dish.price}"/> <fmt:message
+                                                        key="label.price"/></span>
+                                                <c:if test="${sessionScope.sessionUser.role ne 'ADMIN'}">
+                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=addDish&id=<c:out value="${dish.id}"/>"
+                                                      method="post">
+                                                    <input class="menu_btn btn" type="submit"
+                                                           value="<fmt:message key="label.btn.add"/>">
                                                 </form>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
                             </c:forEach>
                         </div>
                     </div>
@@ -101,27 +108,30 @@
                          aria-labelledby="v-pills-messages-tab">
                         <div class="row">
                             <c:forEach items="${requestScope.drinkList}" var="drink">
-                            <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="menus d-flex ftco-animate">
-                                        <div class="menu-img"
-                                             style="background-image: url(${pageContext.request.contextPath}/images/drink-1.jpg);"></div>
-                                        <div class="text d-flex">
-                                            <div class="one-half">
+                                        <div class="text d-flex justify-content-between w-100">
+                                            <div class="">
                                                 <h3><c:out value="${drink.name}"/></h3>
                                                 <p>
                                                     <span class="menu-weight">Volume: </span>
                                                     <span><c:out value="${drink.volume}"/></span>
                                                 </p>
                                             </div>
-                                            <div class="one-forth d-flex flex-column align-items-center">
-                                                <span class="price"><c:out value="${drink.price}"/> UAN</span>
-                                                <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=addDrink&id=<c:out value="${drink.id}"/>" method="post">
-                                                    <input class="menu_btn btn" type="submit" value="Add to cart">
-                                                </form>
+                                            <div class="d-flex flex-column align-items-center">
+                                                <span class="price"><c:out value="${drink.price}"/> <fmt:message
+                                                        key="label.price"/></span>
+                                                <c:if test="${sessionScope.sessionUser.role ne 'ADMIN'}">
+                                                    <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=addDrink&id=<c:out value="${drink.id}"/>"
+                                                          method="post">
+                                                        <input class="menu_btn btn" type="submit"
+                                                               value="<fmt:message key="label.btn.add"/>">
+                                                    </form>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
                             </c:forEach>
                         </div>
                     </div>

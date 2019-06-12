@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OrderProductsDaoImpl implements OrderProductsDao {
     private Connection connection;
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+    private static final Logger logger = LogManager.getLogger(OrderProductsDaoImpl.class);
 
     public OrderProductsDaoImpl(Connection connection) {
         this.connection = connection;
@@ -30,7 +30,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -42,7 +41,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -60,7 +58,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
         return orderProducts;
     }
@@ -79,7 +76,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
         return orderProducts;
     }
@@ -97,7 +93,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
         return orderProducts;
     }
@@ -115,7 +110,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -138,7 +132,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -151,7 +144,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -164,7 +156,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -177,7 +168,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -193,7 +183,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
                 result = resultSet.getFloat("price");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return result;
     }
@@ -210,7 +199,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
                 result = resultSet.getFloat("price");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return result;
     }
@@ -227,7 +215,6 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             resultSet = preparedStatement.executeQuery();
             drinkList = orderProductsMapper.extractOrderProductsDrinks(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return drinkList;
     }
@@ -244,9 +231,25 @@ public class OrderProductsDaoImpl implements OrderProductsDao {
             dishList = orderProductsMapper.extractOrderProductsDishes(resultSet);
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
-            e.printStackTrace();
         }
         return dishList;
+    }
+
+    @Override
+    public boolean isOrderProductsExist(long id) {
+        boolean result = false;
+        String query = OrderProductsQueries.IS_ORDER_PRODUCTS_EXIST.getQuery();
+        final ResultSet resultSet;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getBoolean("order_products_id");
+            }
+        } catch (SQLException e) {
+            logger.fatal("SQLException occurred at OrderProductsDaoImpl ", e);
+        }
+        return result;
     }
 
 }

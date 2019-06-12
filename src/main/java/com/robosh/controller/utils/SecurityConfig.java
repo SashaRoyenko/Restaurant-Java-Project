@@ -24,7 +24,6 @@ public class SecurityConfig {
         List<String> adminAccess = new ArrayList<>();
 
         adminAccess.add(PagesRequest.ADMIN_PAGE);
-        adminAccess.add(PagesRequest.SHOPPING_CART_PAGE);
 
         mapConfig.put(Role.ADMIN, adminAccess);
     }

@@ -25,8 +25,9 @@
         <div class="container">
             <div class="row slider-text align-items-center justify-content-center text-center">
                 <div class="col-md-10 col-sm-12 ftco-animate">
-                    <h1 class="mb-3">Register an make an order</h1>
-                    <p><a href="${pageContext.request.contextPath}/tasty-restaurant/registration" class="btn btn-primary btn-outline-white px-5 py-3">Register</a>
+                    <h1 class="mb-3"><fmt:message key="label.home.slide1"/></h1>
+                    <p><a href="${pageContext.request.contextPath}/tasty-restaurant/registration" class="btn btn-primary btn-outline-white px-5 py-3">
+                        <fmt:message key="label.registration.title"/></a>
                     </p>
                 </div>
             </div>
@@ -38,7 +39,7 @@
         <div class="container">
             <div class="row slider-text align-items-center justify-content-center text-center">
                 <div class="col-md-10 col-sm-12 ftco-animate">
-                    <h1 class="mb-3">Tasty &amp; Delicious Food</h1>
+                    <h1 class="mb-3"><fmt:message key="label.home.slide2"/></h1>
                     </p>
                 </div>
             </div>
@@ -50,7 +51,7 @@
         <div class="container">
             <div class="row slider-text align-items-center justify-content-center text-center">
                 <div class="col-md-10 col-sm-12 ftco-animate">
-                    <h1 class="mb-3">We are glad to you</h1></p>
+                    <h1 class="mb-3"><fmt:message key="label.home.slide3"/></h1></p>
                 </div>
             </div>
         </div>
@@ -65,14 +66,10 @@
             </div>
             <div class="text col-lg-6 ftco-animate">
                 <div class="text-inner align-self-start">
-                    <span class="subheading">About Tasty</span>
-                    <h3 class="heading">Our chef cooks the most delicious food for you</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
-                        live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics,
-                        a large language ocean.</p>
-
-                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It
-                        is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                    <span class="subheading"><fmt:message key="label.home.about.title"/></span>
+                    <h3 class="heading"><fmt:message key="label.home.about.heading"/></h3>
+                    <p><fmt:message key="label.home.about.content1"/></p>
+                    <p><fmt:message key="label.home.about.content2"/></p>
                 </div>
             </div>
         </div>

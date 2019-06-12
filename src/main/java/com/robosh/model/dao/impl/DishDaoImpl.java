@@ -16,7 +16,7 @@ public class DishDaoImpl implements DishDao {
 
 
     private Connection connection;
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+    private static final Logger logger = LogManager.getLogger(DishDaoImpl.class);
 
     public DishDaoImpl(Connection connection) {
         this.connection = connection;
@@ -32,12 +32,12 @@ public class DishDaoImpl implements DishDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
+
         }
     }
 
     @Override
-    public Dish findById(long id){
+    public Dish findById(long id) {
         Dish dish = new Dish();
         DishMapper dishMapper = new DishMapper();
         final String query = DishSqlQueries.FIND_DISH_BY_ID.getQuery();
@@ -46,18 +46,18 @@ public class DishDaoImpl implements DishDao {
             preparedStatement.setLong(1, id);
             preparedStatement.executeQuery();
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 dish = dishMapper.extractObjectFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
+
         }
         return dish;
     }
 
     @Override
-    public List<Dish> findAll(){
+    public List<Dish> findAll() {
         DishMapper dishMapper = new DishMapper();
         List<Dish> dishList = new ArrayList<>();
         final ResultSet resultSet;
@@ -69,14 +69,14 @@ public class DishDaoImpl implements DishDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
+
         }
         return dishList;
     }
 
     @Override
     public void update(Dish dish) throws SQLException {
-        throw new UnsupportedOperationException("This action has not been used here.");
+        logger.fatal("SQLException occurred at UserDaoImpl "+ new UnsupportedOperationException("This action has not been used here."));
     }
 
     @Override
@@ -97,7 +97,7 @@ public class DishDaoImpl implements DishDao {
     }
 
     @Override
-    public void addIngredient(long dish_id, long ingredient_id){
+    public void addIngredient(long dish_id, long ingredient_id) {
         final String query = DishSqlQueries.ADD_DISH_INGREDIENT.getQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, dish_id);
@@ -105,7 +105,7 @@ public class DishDaoImpl implements DishDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
+
         }
     }
 
@@ -121,7 +121,7 @@ public class DishDaoImpl implements DishDao {
             ingredientList = dishMapper.extractDishIngredients(resultSet);
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
+
         }
         return ingredientList;
     }

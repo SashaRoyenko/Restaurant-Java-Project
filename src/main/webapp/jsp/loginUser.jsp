@@ -33,8 +33,9 @@
         <div class="container">
             <div class="row slider-text align-items-center justify-content-center">
                 <div class="col-md-10 col-sm-12 ftco-animate text-center">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Reservation</span></p>
-                    <h1 class="mb-3">Login</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="${pageContext.request.contextPath}/tasty-restaurant/home">
+                        <fmt:message key="label.home.title"/></a></span> <span><fmt:message key="label.login.title"/></span></p>
+                    <h1 class="mb-3"><fmt:message key="label.login.title"/></h1>
                 </div>
             </div>
         </div>
@@ -48,9 +49,13 @@
                 <input type="email" placeholder="Email" name = "login" required></p>
             <p><span class="fontawesome-lock"></span>
                 <input type="password" placeholder="Password" name = "login_password" required></p>
-            <p><input type="submit" value="ВОЙТИ"></p>
+            <p><input type="submit" value="<fmt:message key="label.btn.enter"/>"></p>
         </form>
-        <p>Нет аккаунта? &nbsp;&nbsp;<a href="${pageContext.request.contextPath}/tasty-restaurant/registration">Регистрация</a><span class="fontawesome-arrow-right"></span></p>
+        <c:if test="${param.userExist==false}">
+            <h3>There is no such user</h3>
+        </c:if>
+
+        <p><fmt:message key="label.login.without_account"/> &nbsp;&nbsp;<a href="${pageContext.request.contextPath}/tasty-restaurant/registration"><fmt:message key="label.registration"/></a><span class="fontawesome-arrow-right"></span></p>
     </div>
 </div>
 

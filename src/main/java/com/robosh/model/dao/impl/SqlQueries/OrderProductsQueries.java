@@ -17,7 +17,7 @@ public enum OrderProductsQueries {
             " drinks_drink_id = drink_id" +
             " AND" +
             " user_user_id = (?)"),
-    CREATE_ORDER_PRODUCTS("INSERT INTO order_products(user_id) VALUES((?))"),
+    CREATE_ORDER_PRODUCTS("INSERT INTO order_products(user_user_id) VALUES((?))"),
     FIND_ORDER_PRODUCTS_BY_ID(
             " SELECT order_products_id, user.* FROM order_products, user" +
                     " WHERE order_products_id = (?)" +
@@ -61,7 +61,8 @@ public enum OrderProductsQueries {
             "AND " +
             "drinks_drink_id = drink_id " +
             "AND " +
-            "user_user_id = (?)");
+            "user_user_id = (?)"),
+    IS_ORDER_PRODUCTS_EXIST("Select order_products_id from order_products where user_user_id = (?)");
     String query;
 
     OrderProductsQueries(String query) {

@@ -5,13 +5,12 @@ import com.robosh.model.dao.impl.SqlQueries.UserSqlQueries;
 import com.robosh.model.dao.mapper.UserMapper;
 import com.robosh.model.entity.User;
 import com.robosh.model.entity.enums.Role;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 public class UserDaoImpl implements UserDao {
     private Connection connection;
@@ -23,6 +22,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void create(final User entity) {
+
         final String query = UserSqlQueries.CREATE_USER.getQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, entity.getFirstName());
@@ -33,7 +33,6 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -51,7 +50,6 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
         }
         return user;
     }
@@ -67,10 +65,8 @@ public class UserDaoImpl implements UserDao {
             while (resultSet.next()) {
                 userList.add(userMapper.extractObjectFromResultSet(resultSet));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
         }
 
         return userList;
@@ -101,7 +97,6 @@ public class UserDaoImpl implements UserDao {
             result = resultSet.next();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
         }
         return result;
     }
@@ -117,7 +112,6 @@ public class UserDaoImpl implements UserDao {
             result = resultSet.next();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
         }
         return result;
     }
@@ -133,7 +127,6 @@ public class UserDaoImpl implements UserDao {
             result = resultSet.next();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
         }
         return result;
     }
@@ -153,7 +146,6 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
         }
         return user;
     }
@@ -167,7 +159,6 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.executeQuery();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at UserDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 

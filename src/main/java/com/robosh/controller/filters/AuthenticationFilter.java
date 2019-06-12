@@ -1,20 +1,21 @@
 package com.robosh.controller.filters;
 
 import com.robosh.controller.command.errors.Error403Command;
-import com.robosh.controller.command.pages.HomeCommand;
-import com.robosh.controller.command.users.AdminPageCommand;
-import com.robosh.controller.command.users.UserPageCommand;
 import com.robosh.controller.utils.PagesRequest;
 import com.robosh.controller.utils.SecurityUtil;
 import com.robosh.controller.utils.SessionUtil;
 import com.robosh.model.entity.User;
-import com.robosh.service.OrderService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This filter is used to check user role, page and do action
+ * depending on this parameters
+ * @author Sasha
+ */
 public class AuthenticationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -54,8 +55,7 @@ public class AuthenticationFilter implements Filter {
                 response.sendRedirect(PagesRequest.PATH + PagesRequest.USER_PAGE);
                 break;
             default:
-                System.out.println("default");
-               response.sendRedirect(PagesRequest.PATH + PagesRequest.HOME_PAGE);
+                response.sendRedirect(PagesRequest.PATH + PagesRequest.HOME_PAGE);
         }
     }
 

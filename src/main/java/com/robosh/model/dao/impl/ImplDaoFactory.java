@@ -2,12 +2,14 @@ package com.robosh.model.dao.impl;
 
 import com.robosh.model.connection.ConnectionPoolHolder;
 import com.robosh.model.dao.*;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ImplDaoFactory extends DaoFactory {
+    public static Logger logger = Logger.getLogger(ImplDaoFactory.class);
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     @Override
@@ -44,6 +46,7 @@ public class ImplDaoFactory extends DaoFactory {
         try{
             return dataSource.getConnection();
         } catch (SQLException e) {
+            logger.fatal(e);
             throw new RuntimeException(e);
         }
     }

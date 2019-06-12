@@ -6,23 +6,46 @@ import com.robosh.model.entity.Drink;
 
 import java.util.List;
 
+/**
+ * Class DrinkService
+ * realise logic manipulation
+ * with db for class Drink
+ *
+ * @author Sasha
+ */
 public class DrinkService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public void createDrink(Drink drink){
+    /**
+     * Used to create new drink in db
+     *
+     * @param drink
+     */
+    public void createDrink(Drink drink) {
         try (DrinkDao dao = daoFactory.createDrinkDao()) {
             dao.create(drink);
         }
 
     }
 
-    public Drink getDrinkById(long id){
+    /**
+     * Used to get drink by it's id in db
+     *
+     * @param id
+     * @return Drink
+     */
+    public Drink getDrinkById(long id) {
         try (DrinkDao dao = daoFactory.createDrinkDao()) {
             return dao.findById(id);
         }
     }
 
-    public List<Drink> getAllDrinks(){
+    /**
+     * Used to det all drinks from db
+     *
+     * @return List<Drink>
+     */
+    public List<Drink> getAllDrinks() {
         try (DrinkDao dao = daoFactory.createDrinkDao()) {
             return dao.findAll();
         }

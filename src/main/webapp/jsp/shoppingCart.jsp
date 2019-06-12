@@ -15,19 +15,19 @@
 <html lang="${locale}">
 <head>
     <jsp:include page="parts/link.jsp"/>
-    <title><fmt:message key="label.menu.title"/></title>
+    <title><fmt:message key="label.basket.title"/></title>
 </head>
 <body>
 <jsp:include page="parts/nav.jsp"/>
 <section class="home-slider owl-carousel">
-    <div class="slider-item" style="background-image: url(${pageContext.request.contextPath}/images/bg_1.jpg);"
-         data-stellar-background-ratio="0.5">
+    <div class="slider-item" style="background-image: url(${pageContext.request.contextPath}/images/bg_1.jpg);" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row slider-text align-items-center justify-content-center">
                 <div class="col-md-10 col-sm-12 ftco-animate text-center">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Menu</span></p>
-                    <h1 class="mb-3">Basket</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="${pageContext.request.contextPath}/tasty-restaurant/home">
+                        <fmt:message key="label.home.title"/></a></span> <span><fmt:message key="label.basket.title"/></span></p>
+                    <h1 class="mb-3"><fmt:message key="label.basket.title"/></h1>
                 </div>
             </div>
         </div>
@@ -35,12 +35,6 @@
 </section>
 <section class="ftco-section bg-light">
     <div class="container">
-        <div class="row justify-content-center mb-5 pb-5">
-            <div class="col-md-7 text-center heading-section ftco-animate">
-                <span class="subheading">Our Menu</span>
-                <h2>Discover Our Exclusive Menu</h2>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12 dish-menu">
                 <!-- END -->
@@ -62,10 +56,10 @@
                                                 </p>
                                             </div>
                                             <div class="one-forth pr-1 d-flex flex-column align-items-center">
-                                                <span class="price"><c:out value="${dish.price}"/> UAN</span>
+                                                <span class="price"><c:out value="${dish.price}"/> <fmt:message key="label.price"/></span>
                                                 <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=deleteDish&id=<c:out value="${dish.id}"/>"
                                                       method="post">
-                                                    <input class="menu_btn btn" type="submit" value="Delete">
+                                                    <input class="menu_btn btn" type="submit" value="<fmt:message key="label.btn.delete"/>">
                                                 </form>
                                             </div>
                                         </div>
@@ -89,10 +83,10 @@
                                                 </p>
                                             </div>
                                             <div class="one-forth pr-1 d-flex flex-column align-items-center">
-                                                <span class="price"><c:out value="${drink.price}"/> UAN</span>
+                                                <span class="price"><c:out value="${drink.price}"/> <fmt:message key="label.price"/></span>
                                                 <form action="${pageContext.request.contextPath}/tasty-restaurant/basket?action=deleteDrink&id=<c:out value="${drink.id}"/>"
                                                       method="post">
-                                                    <input class="menu_btn btn" type="submit" value="Delete">
+                                                    <input class="menu_btn btn" type="submit" value="<fmt:message key="label.btn.delete"/>">
                                                 </form>
                                             </div>
                                         </div>
@@ -109,11 +103,12 @@
 <section class="container d-flex justify-content-center align-items-center">
     <div>
         <h5 class="mr-5">
-            Total price: <c:out value="${sessionScope.totalPrice}"/> UAN
+            Total price: <c:out value="${sessionScope.totalPrice}"/> <fmt:message key="label.price"/>
         </h5>
     </div>
-    <input id="address_btn" class="btn btn-primary pl-5 pr-5" type="submit" value="BUY">
-
+    <c:if test="${sessionScope.totalPrice ne 0}">
+        <input id="address_btn" class="btn btn-primary pl-5 pr-5" type="submit" value="<fmt:message key="label.btn.buy"/>">
+    </c:if>
 </section>
 <div id="address_wrapper">
     <div class="address_form">
@@ -121,7 +116,7 @@
               class="d-flex flex-column align-items-center justify-content-center ">
 
             <input type="text" placeholder="Your Address" required class="form-control" name="address">
-            <input type="submit" class="mt-4 btn btn-primary pl-5 pr-5" value="Send">
+            <input type="submit" class="mt-4 btn btn-primary pl-5 pr-5" value="<fmt:message key="label.btn.confirm"/>">
 
         </form>
     </div>

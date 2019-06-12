@@ -1,6 +1,8 @@
 package com.robosh.model.connection;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.io.FileNotFoundException;
@@ -10,7 +12,7 @@ import java.util.Properties;
 
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
-
+    private static final Logger logger = LogManager.getLogger(ConnectionPoolHolder.class);
     public static DataSource getDataSource() {
         if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {
@@ -25,13 +27,13 @@ public class ConnectionPoolHolder {
                         if (inputStream != null) {
                             properties.load(inputStream);
                         } else {
-                            throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+                            logger.fatal(new FileNotFoundException("property file '" + propFileName + "' not found in the classpath"));
                         }
                         Class.forName(properties.getProperty("db.connection.driver"));
                         dataSource = getBasicDataSource(properties);
 
                     } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
+                        logger.fatal(e);
                     }
                 }
             }

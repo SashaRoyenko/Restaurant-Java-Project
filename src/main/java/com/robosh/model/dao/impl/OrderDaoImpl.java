@@ -14,7 +14,7 @@ import java.util.List;
 public class OrderDaoImpl implements OrderDao {
 
     private Connection connection;
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+    private static final Logger logger = LogManager.getLogger(OrderDaoImpl.class);
 
     public OrderDaoImpl(Connection connection) {
         this.connection = connection;
@@ -29,7 +29,6 @@ public class OrderDaoImpl implements OrderDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -47,7 +46,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return order;
     }
@@ -65,7 +63,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return orders;
     }
@@ -83,7 +80,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return orders;
     }
@@ -103,7 +99,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return orders;
     }
@@ -123,7 +118,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return orders;
     }
@@ -142,7 +136,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return orders;
     }
@@ -160,7 +153,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return orders;
     }
@@ -201,7 +193,6 @@ public class OrderDaoImpl implements OrderDao {
             paid = resultSet.getBoolean("paid");
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return paid;
     }
@@ -215,7 +206,6 @@ public class OrderDaoImpl implements OrderDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -227,7 +217,6 @@ public class OrderDaoImpl implements OrderDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
     }
 
@@ -243,7 +232,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return count;
     }
@@ -251,7 +239,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public long uncheckedOrderCount() {
         long count = 0;
-        String query = OrderSqlQueries.SELECT_UNCONFIRMED_ORDERS_LIMIT.getQuery();
+        String query = OrderSqlQueries.SELECT_UNCONFIRMED_ORDERS_COUNT.getQuery();
         final ResultSet resultSet;
         try (Statement statement = connection.createStatement()) {
             resultSet = statement.executeQuery(query);
@@ -260,7 +248,6 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.fatal("SQLException occurred at OrderDaoImpl ", e);
-            e.printStackTrace();
         }
         return count;
     }

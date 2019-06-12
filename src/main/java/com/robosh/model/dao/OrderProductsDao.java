@@ -18,4 +18,5 @@ public interface OrderProductsDao extends Dao<OrderProducts> {
     float getTotalDrinkPrice(User user);
     List<Drink> selectDrinks(User user);
     List<Dish> selectDishes(User user);
+    boolean isOrderProductsExist(long id);
 }

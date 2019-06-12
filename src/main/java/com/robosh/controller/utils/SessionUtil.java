@@ -13,7 +13,8 @@ public class SessionUtil {
         return (User) session.getAttribute("sessionUser");
     }
 
-    public static void removeSession(HttpSession session){
+    public static void removeSession(HttpSession session) {
         session.invalidate();
     }
+
 }

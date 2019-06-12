@@ -14,7 +14,7 @@
 
 <html lang="${locale}">
 <head>
-    <title>Title</title>
+    <title><fmt:message key="label.user.title"/> </title>
     <jsp:include page="../parts/link.jsp"/>
 
 </head>
@@ -26,23 +26,24 @@
         <div class="container">
             <div class="row slider-text align-items-center justify-content-center">
                 <div class="col-md-10 col-sm-12 ftco-animate text-center">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Your account</span></p>
-                    <h1 class="mb-3"><fmt:message key="label.registration.title"/></h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="${pageContext.request.contextPath}/tasty-restaurant/home">
+                        <fmt:message key="label.home.title"/></a></span> <span><fmt:message key="label.user.title"/></span></p>
+                    <h1 class="mb-3"><fmt:message key="label.user.title"/></h1>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<h5 class="text-center mt-5 account_title">Your information</h5>
+<h5 class="text-center mt-5 account_title"><fmt:message key="label.user.heading"/></h5>
 
 <section class="user_account__section container mt-5">
     <div class="user_account__wrap d-flex flex-row">
         <div class="nav flex-column nav-pills col-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link my_nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
-               role="tab" aria-controls="v-pills-home" aria-selected="true">Кабінет</a>
+               role="tab" aria-controls="v-pills-home" aria-selected="true"><fmt:message key="label.user.cabinet"/></a>
             <a class="nav-link my_nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
-               role="tab" aria-controls="v-pills-profile" aria-selected="false">Не оплачені замовлення</a>
+               role="tab" aria-controls="v-pills-profile" aria-selected="false"><fmt:message key="label.user.unpaid"/></a>
         </div>
 
         <div class="tab-content col-9" id="v-pills-tabContent">
@@ -74,7 +75,7 @@
                             <h6 class="user_cabinet__title">${sessionScope.sessionUser.phone}</h6><i
                                 class="user_cabinet__edit fas fa-edit" id="editphone"></i>
                             <form class="form-group" action="" method="post" id="slidephone">
-                                <input class="form-control" type="phone" placeholder="Phone">
+                                <input class="form-control" type="text" placeholder="Phone">
                             </form>
                         </li>
                         <li class="user_cabinet__list-item d-flex flex-row align-items-baseline">
@@ -89,7 +90,7 @@
                         </li>
                     </ul>
                     <form action="${pageContext.request.contextPath}/tasty-restaurant/logOut">
-                        <button type="submit" class="logout btn">Logout</button>
+                        <button type="submit" class="logout btn"><fmt:message key="label.btn.logout"/></button>
                     </form>
                 </div>
             </div>
@@ -103,7 +104,7 @@
                             <p><c:out value="${unpaid.user.firstName}"/></p>
                             <p><c:out value="${unpaid.user.phone}"/></p>
                             <form action="${pageContext.request.contextPath}/tasty-restaurant/order?action=payOrder&id=<c:out value="${unpaid.id}"/>" method="post">
-                                <input class="btn menu_btn" type="submit" value="Оплатити">
+                                <input class="btn menu_btn" type="submit" value="<fmt:message key="label.btn.pay"/>">
                             </form>
                         </li>
                     </c:forEach>

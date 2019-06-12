@@ -25,6 +25,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Main servlet that communicate with all commands and execute action
+ * which is registered in program
+ * @author Sasha
+ */
 public class Servlet extends HttpServlet {
     private Map<String, Command> commands;
 
@@ -50,6 +55,7 @@ public class Servlet extends HttpServlet {
         commands.put(PagesRequest.BASKET, new BasketCommand(dishService, drinkService, orderProductsService));
         commands.put(PagesRequest.ORDER, new OrderCommand(orderService, orderProductsService));
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         executeRequest(request, response);
@@ -60,7 +66,7 @@ public class Servlet extends HttpServlet {
         executeRequest(request, response);
     }
 
-    private void executeRequest (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void executeRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = request.getPathInfo();
         Command currentCommand = commands.get(uri);
         if (currentCommand == null) {
